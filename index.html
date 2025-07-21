@@ -976,15 +976,19 @@
         homiemoon.style.display = "none";
 
       } else if (this.value ==="AT") {
-        whoSelect.style.display = "";
-        whoLabel.style.display = "";
+        if(plusOneAllowed || partnerParam != '' || kids > 0) {
+          whoSelect.style.display = "";
+          whoLabel.style.display = "";
+        }
         allergiesLabel.style.display = "";
         allergiesInput.style.display = "";
         homiemoon.style.display = "none";
       }
       else {
-        whoSelect.style.display = "";
-        whoLabel.style.display = "";
+        if(plusOneAllowed || partnerParam != '' || kids > 0) {
+          whoSelect.style.display = "";
+          whoLabel.style.display = "";
+        }
         allergiesLabel.style.display = "";
         allergiesInput.style.display = "";
         if(guestCode != "1" && homiemoonParam == '1') {
@@ -1008,13 +1012,21 @@
       optionsWho.push({ value: "guest_plus_partner", text: text["form.who.both"] });
     }
     
-    if (kids > 0) {
+    if (kids > 0 && partnerParam) {
       if(kids === 1) { 
-        optionsWho.push({ value: "both_plus_one_kid", text: "Wir kommen zu dritt" });
+        optionsWho.push({ value: "both_plus_one_kid", text: text["form.who.allThree"] });
       } else if(kids === 2) {
-        optionsWho.push({ value: "both_plus_two_kids", text: "Wir kommen zu viert" });
+        optionsWho.push({ value: "both_plus_two_kids", text: text["form.who.allFour"] });
       } else if(kids === 3) {
-        optionsWho.push({ value: "both_plus_two_kids", text: "Wir kommen zu fünft" });
+        optionsWho.push({ value: "both_plus_three_kids", text: text["form.who.allFive"] });
+      }
+    } else if(kids > 0) {
+      if(kids === 1) { 
+        optionsWho.push({ value: "guest_plus_one_kid", text: text["form.who.both"] });
+      } else if(kids === 2) {
+        optionsWho.push({ value: "guest_plus_two_kids", text: text["form.who.allThree"] });
+      } else if(kids === 3) {
+        optionsWho.push({ value: "guest_plus_three_kids", text: text["form.who.allFour"] });
       }
     }
 
@@ -1033,7 +1045,7 @@
 
     document.getElementById("allergies").placeholder = text["form.allergies.placeholder"];
 
-    if(!plusOneAllowed && partnerParam === '')
+    if(!plusOneAllowed && partnerParam === '' && kids === 0)
     {
       selectWho.value = "only_guest"
       document.getElementById("who-label").style.display = 'none';
