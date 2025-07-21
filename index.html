@@ -1,1 +1,1198 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="only light">
+  <title>Patricia & Paul</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>💍</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato&family=Imperial+Script&display=swap" rel="stylesheet" />
 
+  <script src="https://cdn.tailwindcss.com" data-tailwind-config='{"darkMode":"class"}'></script>
+  <style>
+    :root {
+      --primary: #590b18;    
+      --secondary: #62745c;
+      --accent: #f5ebd0;     
+    }
+    
+    html {
+      color-scheme: light !important;
+      background-color: var(--primary) !important;
+      color: var(--accent) !important;
+    }
+  
+    body {
+      font-family: 'Playfair Display', sans-serif;
+      background-color: var(--primary) !important; 
+      color: var(--accent) !important;             
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --primary: #590b18;
+        --secondary: #6f7d6a;
+        --accent: #e4d7be;
+      }
+
+      html, body {
+        background-color: var(--primary) !important;
+        color: var(--accent) !important;
+      }
+    }
+    
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--accent);
+    }
+  
+    nav {
+      background-color: var(--primary);
+      color: var(--accent);
+      padding: 1.5rem;
+      text-align: center;
+      font-weight: 600;
+    }
+  
+    .tab-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+  
+    .tab-button {
+      background-color: transparent;
+      border: 2px solid var(--secondary);
+      color: var(--accent); /* Beige Text auf dunklem Hintergrund */
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+  
+    .tab-button:hover {
+      background-color: var(--secondary);
+      color: var(--accent);
+    }
+  
+    .tab-button.active {
+      background-color: var(--accent);
+      color: var(--primary);
+      border-color: var(--accent);
+    }
+  
+    .tab-content {
+      display: none;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  
+    .tab-content.active {
+      display: block;
+    }
+  
+    .card {
+      /*background-color: white;*/
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin: 1rem auto;
+      max-width: 450px;
+      text-align: left;
+      box-shadow: 0 4px 8px var(--primary);
+      border: 1px solid var(--primary);
+      color: var(--accent); /* Dunkle Schrift in Cards */
+    }
+  
+    .card h3, .card h4 {
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+  
+    form#rsvp-form {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      border: 1px solid var(--secondary);
+      color: var(--primary);
+    }
+  
+    form#rsvp-form select,
+    form#rsvp-form input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+      margin-bottom: 1.25rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.375rem;
+    }
+  
+    form#rsvp-form button {
+      background-color: var(--accent);   /* Beige Button */
+      color: var(--primary);             /* Dunkle Schrift */
+      font-weight: bold;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      transition: background-color 0.3s ease;
+    }
+  
+    form#rsvp-form button:hover {
+      background-color: #e8dbc1;
+    }
+  
+    footer {
+      color: var(--accent);
+    }
+
+    .faq-item {
+      border: 2px solid var(--accent);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background-color: transparent;
+    }
+
+    .faq-question {
+      font-weight: 600;
+      color: var(--accent);
+      user-select: none;
+      position: relative;
+      padding-right: 1.5rem;
+    }
+
+    /* Pfeil nach rechts/unten */
+    .faq-question::after {
+      content: "▸";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: transform 0.3s ease;
+      color: var(--accent);
+    }
+
+    .faq-question.open::after {
+      transform: translateY(-50%) rotate(90deg);
+    }
+
+    .faq-answer {
+      display: none;
+      padding-top: 0;
+      color: var(--accent);
+      transition: all 0.3s ease;
+    }
+
+    .faq-question.open + .faq-answer {
+      display: block;
+      padding-top: 0.5rem;
+    }
+
+    .faq-answer a {
+      color: var(--accent, blue);
+      text-decoration: underline;
+      font-weight: 500;
+    }
+
+    .faq-answer ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .faq-answer li {
+      margin-bottom: 0.3rem;
+    }
+
+    .save-date {
+      font-family: 'Imperial Script', cursive;
+      font-size: 5.5rem;
+      color: var(--accent) !important;
+    }
+
+    .save-date {
+      font-family: 'Imperial Script', cursive;
+      font-size: 5.5rem;
+      color: var(--accent) !important;
+    }
+
+    .fade-slide {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 3s ease-out, transform 3s ease-out;
+    }
+
+    .fade-slide.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .iconcard {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      border: none;
+      box-shadow: none;
+      padding: 2rem 1rem;
+      background: none;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .icon-area {
+      width: 150px;
+      height: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .icon-area img {
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .text-area {
+      max-width: 100%;
+    }
+
+    .text-area h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .text-area p {
+      font-size: 1rem;
+      color: var(--accent, #333);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .text-area a {
+      color: var(--accent, blue);
+      text-decoration: underline;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    #homiemoon label {
+      padding-left: 1rem;
+    }
+  </style>
+  
+</head>
+<body>
+  <nav class="w-full flex justify-end p-2">
+    <div class="flex gap-3 items-center">
+      <button onclick="changeLanguage('de')" title="Deutsch (Österreich)"
+        class="transition transform hover:scale-110 focus:outline-none rounded-full p-1 border-2"
+        id="lang-de">
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f1e6-1f1f9.svg" alt="🇦🇹" class="w-6 h-6">
+      </button>
+      <button onclick="changeLanguage('en')" title="English (USA)"
+        class="transition transform hover:scale-110 focus:outline-none rounded-full p-1 border-2"
+        id="lang-en">
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f1fa-1f1f8.svg" alt="🇺🇸" class="w-6 h-6">
+      </button>
+      <button onclick="changeLanguage('id')" title="Bahasa (Indonesia)"
+        class="transition transform hover:scale-110 focus:outline-none rounded-full p-1 border-2"
+        id="lang-id">
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f1ee-1f1e9.svg" alt="🇮🇩" class="w-6 h-6">
+      </button>
+    </div>
+  </nav>  
+  <section class="py-10 px-4">
+    <img src="us-main.png" alt="Patricia & Paul" class="mx-auto rounded-2xl shadow-lg max-w-md w-full sm:max-w-md fade-slide" onclick="openModal(this.src)" />
+  </section>
+  <section class="text-center py-10 px-4 fade-slide">
+    <h2 data-i18n="invitation.hello.singular" id="invitation" class="text-4xl md:text-5xl mb-4"></h2>
+    <p data-i18n="invitation.greeting.singular" id="invitation.greeting" class="text-lg md:text-xl mb-6"></p>
+  </section>
+  <section id="save-date" class="text-center py-10 px-4">
+    <img src="background-flowers2.png" alt="Blumenhintergrund" class="mx-auto rounded-2xl max-w-md w-full sm:max-w-md fade-slide" />
+    <h1 class="save-date fade-slide text-center" data-i18n="saveDate.title"></h1>
+    <div id="save-date-content" class="fade-slide"></div>
+  </section>
+
+  <section class="py-10 px-4 fade-slide">
+    <img src="header-background.png" alt="Blumenhintergrund" class="mx-auto rounded-2xl max-w-md w-full sm:max-w-md fade-slide" />
+    <h2 data-i18n="rsvp.title.singular" id="rsvp-text" class="text-3xl text-center mb-4 fade-slide"></h2>
+    <form id="rsvp-form" autocomplete="off">
+      <input type="hidden" name="name" id="input-name" />
+      <label>
+        <span id="form-attending" data-i18n="form.attending.singular"></span>
+        <div id="attending-error" class="text-red-500 text-sm mt-1"></div>
+        <select name="attending" id="attending-select">
+          <!-- Optionen werden dynamisch gesetzt -->
+        </select>
+      </label>
+    
+      <label id="who-label">
+        <span data-i18n="form.who"></span>
+        <div id="who-error" class="text-red-500 text-sm mt-1"></div>
+        <select name="who" id="who-select">
+          <!-- Optionen werden dynamisch gesetzt -->
+        </select>
+      </label>
+    
+      <label>
+        <span id="allergies-label" data-i18n="form.allergies"></span>
+        <input id="allergies" name="allergies" type="text" placeholder="" />
+      </label>
+      
+      <fieldset id="homiemoon">
+        <span data-i18n="form.homiemoon.question"></span>
+        <label class="block mb-2">
+          <input type="checkbox" name="homiemoon[]" value="gili" />
+          <span data-i18n="form.homiemoon.option.gili"></span>
+        </label>
+        <label class="block mb-2">
+          <input type="checkbox" name="homiemoon[]" value="lembongan" />
+          <span data-i18n="form.homiemoon.option.lembongan"></span>
+        </label>
+        <label class="block mb-2">
+          <input type="checkbox" name="homiemoon[]" value="komodo" />
+          <span data-i18n="form.homiemoon.option.komodo"></span>
+        </label>
+      </fieldset>
+      <button data-i18n="form.submit" type="submit"></button>
+    </form>
+    <h3 id="successMessage" style="display: none;" class="card text-center mt-4" data-i18n="form.success"></h3>    
+  </section>
+  <section class="py-12 px-4 text-center">
+    <img src="background-flowers2.png" alt="Blumenhintergrund" class="mx-auto rounded-2xl max-w-md w-full sm:max-w-md fade-slide" />
+    <h2 class="text-3xl mb-6 fade-slide" data-i18n="dresscode"></h2>
+    <div class="mb-8">
+      <img src="dresscode-colors.png" alt="Dresscode Colors" class="mx-auto rounded-lg shadow-md object-cover w-32 max-w-sm cursor-pointer fade-slide" />
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
+      <img src="dresscode-1.png" alt="Dresscode 1" class="rounded-lg shadow-md object-cover w-full cursor-pointer fade-slide" onclick="openModal(this.src)" />
+      <img src="dresscode-2.png" alt="Dresscode 2" class="rounded-lg shadow-md object-cover w-full cursor-pointer fade-slide" onclick="openModal(this.src)" />
+      <img src="dresscode-3.png" alt="Dresscode 3" class="rounded-lg shadow-md object-cover w-full cursor-pointer fade-slide" onclick="openModal(this.src)" />
+      <img src="dresscode-4.png" alt="Dresscode 4" class="rounded-lg shadow-md object-cover w-full cursor-pointer fade-slide" onclick="openModal(this.src)" />
+    </div>
+  </section>
+  <section id="fotos" class="text-center py-10 px-4">
+    <div class="iconcard mx-auto w-full sm:max-w-md fade-slide">
+      <div class="icon-area w-[150px] h-[150px] flex justify-center items-center overflow-hidden rounded-full mx-auto mb-4">
+        <img src="icon-camera.png" alt="Icon" class="w-full h-full object-cover rounded-full" />
+      </div>
+      <div class="text-area text-left w-[90%]">
+        <h3 class="text-xl font-semibold mb-2" data-i18n="fotos"></h3>
+        <p class="text-gray-600" data-i18n="fotos.upload"></p>
+        <a class="text-gray-600" data-i18n="fotos.uploadlink" href="https://www.dropbox.com/request/E2YrIDGz8KWOUGAF2Xpu?oref=e" target="_blank" rel="noopener noreferrer"></a>
+      </div>
+    </div>
+    <div class="iconcard mx-auto w-full sm:max-w-md fade-slide">
+      <div class="icon-area w-[150px] h-[150px] flex justify-center items-center overflow-hidden rounded-full mx-auto mb-4">
+        <img src="icon-present.png" alt="Icon" class="w-full h-full object-cover rounded-full" />
+      </div>
+      <div class="text-area text-left w-[90%]">
+        <h3 class="text-xl font-semibold mb-2" data-i18n="presents"></h3>
+        <p class="text-gray-600" data-i18n=" presents.description"></p>
+      </div>
+    </div>
+  </section>
+
+  </section>
+  <section id="faq" class="text-center py-10 px-4 fade-slide">
+    <h2 class="text-3xl mb-6" data-i18n="faq.title"></h2>
+    <div id="faq-content"></div>
+  </section>
+  <footer data-i18n="footer.copyright" class="text-center py-4 text-sm text-gray-500">
+  </footer>
+  
+  <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;z-index:1000" onclick="this.style.display='none'">
+    <img id="modal-img" src="" style="max-width:90vw;max-height:90vh;border-radius:8px;box-shadow:0 0 10px black" />
+  </div>
+  
+  <script>
+    document.documentElement.classList.remove('dark');
+
+    function changeLanguage(lang) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', lang); // Setzt oder ersetzt den "lang"-Parameter
+      window.location.href = url.toString(); // Lädt die Seite neu mit neuer URL
+    }
+
+    function getUrlParams() {
+      const params = {};
+      window.location.search.substring(1).split('&').forEach(pair => {
+        const [key, value] = pair.split('=');
+        if (key) params[key] = decodeURIComponent(value || '');
+      });
+      return params;
+    }
+
+    const googleScriptURL = "https://script.google.com/macros/s/AKfycbxL3HlpFpuCoJxczKlxwVrQFO2nZlY0JLoZumBGAvC6Uq5izYk66n0csQn7CzVW55y07g/exec";
+    const params = getUrlParams();
+    const guestParam = params.guest || '';
+    const plusOneAllowed = params.plusone === '1';
+    const partnerParam = params.partner || '';
+    const homiemoonParam = params.homiemoon || '0';
+    const lang = params.lang || 'de';
+    const kids = parseInt(params.kids, 10) || 0;
+
+    let partnerName = '';
+
+    const activeBtn = document.getElementById(`lang-${lang}`);
+    if (activeBtn) {
+      activeBtn.classList.add('border-blue-400', 'scale-110');
+    }
+
+    let guestCode = guestParam.charAt(0);
+    let guestName = decodeURIComponent(guestParam.slice(2).replace(/-/g, ' '));
+    const firstName = guestName.split(' ')[0];
+    document.getElementById("input-name").value = guestName;
+
+    const translations = {
+      de: {
+        "nav.greeting": "Willkommen zur Hochzeit",
+        "invitation.hello.singular": "Lass uns feiern",
+        "invitation.hello.plural": "Lasst uns feiern",
+        "invitation.greeting.singular": "Wir laden dich herzlich zu unserer Hochzeit ein!",
+        "invitation.greeting.plural": "Wir laden euch herzlich zu unserer Hochzeit ein!",
+        "saveDate.title": "Save the date",
+        "austria": "Österreich",
+        "indonesia": "Indonesien",
+        "rsvp.title.singular": "Sag uns Bescheid",
+        "rsvp.title.plural": "Sagt uns Bescheid",
+        "form.attending.singular": "Wirst du teilnehmen?",
+        "form.attending.plural": "Werdet ihr teilnehmen?",
+        "form.pleaseChoose": "Bitte wählen",
+        "form.yes": "Ja!",
+        "form.onlyAustria": "Nur in Österreich",
+        "form.onlyIndonesia": "Nur in Indonesien",
+        "form.yesToBoth": "Ja, auf beiden Hochzeiten!",
+        "form.sorryNo": "Leider nicht",
+        "form.who": "Wer kommt?",
+        "form.who.onlyMe": "Nur ich",
+        "form.who.only": "Nur",
+        "form.who.both": "Wir kommen beide",
+        "form.who.allThree": "Wir kommen zu dritt",
+        "form.who.allFour": "Wir kommen zu viert",
+        "form.who.allFive": "Wir kommen zu fünft",
+        "form.who.plusOne": "+1 - Ich bringe jemanden mit",
+        "form.allergies": "Allergien / Unverträglichkeiten",
+        "form.allergies.placeholder": "z.B. Nüsse, Laktose, etc.",
+        "form.submit": "Antwort absenden",
+        "form.success": "Danke für deine Rückmeldung!",
+        "form.failure": "Fehler beim Absenden. Bitte versuche es später erneut.",
+        "faq.title": "Oft gestellte Fragen",
+        "footer.copyright": "© 2025 Patricia & Paul – Wir freuen uns auf euch!",
+        "and": "und",
+        "date.austria": "4. August 2026",
+        "date.indonesia": "4. August 2027",
+        "wallhof": "Wallhof",
+        "wallhof.address": "Doppl 16, 4311 Schwertberg",
+        "wallhof.start": "Einlass: 13:30",
+        "wallhof.ceremony": "Trauung: 14:00",
+        "jakarta": "Jakarta",
+        "jakarta.address": "TBD, Indonesia",
+        "jakarta.start": "Einlass: 15:00",
+        "tinki": "Wichtiger Hinweis",
+        "tinki.text": "Unsere kleine Welt und unser Herz Tinki, ist leider nicht mehr die Jüngste. Sollte es ihr kurz vor der Hochzeit gesundheitlich schlecht gehen – was wir natürlich alle nicht hoffen – würde Patricia aus Liebe und Verantwortung nicht nach Indonesien fliegen und die Hochzeit um ein Jahr verschieben. Wir möchten euch daher dringend empfehlen, eure Reise stornierbar zu buchen oder möglichst mit der Kreditkarte zu zahlen, da viele Kreditkarten oft eine Stornoversicherung inklusive haben. Diese Entscheidung würde uns wirklich nicht leicht fallen und wir hoffen sehr auf euer Verständnis. Eure Rücksichtnahme bedeutet uns sehr viel.",
+        "dresscode": "Dresscode",
+        "agenda": "Agenda",
+        "agenda.comingsoon": "Die Agenda der Hochzeit wird zwei Monate vorher hier zu finden sein.",
+        "fotos": "Fotos hochladen",
+        "fotos.upload": "Wir wünschen uns, dass die Trauung nur von unserem Fotografen festgehalten wird und und ihr das Hier und Jetzt mit uns genießt. Für alle Fotos, die ihr danach macht, würden wir uns freuen, wenn ihr sie hier hochladet.",
+        "fotos.uploadlink": "Hier geht es zum Album",
+        "presents": "Geschenkswunsch",
+        " presents.description": "Eure Zeit und euer Kommen sind die größten Geschenke für uns. Wer uns aber eine zusätzliche Freude machen möchte, darf sehr gern zur Hochzeitskasse beitragen.",
+        "homiemoon": "Homie-Moon",
+        "homiemoon.description": "Wir planen nach der Hochzeit einen kleinen gemeinsamen Trip mit euch (max. 4 Tage) – unseren Homie‑moon. Ob wir zusammen entspannen, schnorcheln,  ein paar Tage auf einem Boot verbringen oder einfach gut essen – das hängt davon ab, worauf ihr Lust habt. Bitte gebt uns Bescheid, ob ihr dabei wärt - dann können wir etwas Passendes planen. Wichtig: Das Ganze ist natürlich völlig freiwillig – ihr müsst euch zu nichts verpflichtet fühlen. Wenn es für euch nicht passt, ist das absolut okay und wir freuen uns trotzdem riesig, euch bei der Hochzeit dabeizuhaben.",
+        "form.homiemoon.question": "Wärst du bei einem Homie-Moon dabei?",
+        "form.homiemoon.option.gili": "Schnorcheln und Baden auf den Gilli Islands (Flug über Lombok + Boot)",
+        "form.homiemoon.option.lembongan": "Island-life auf Nusa Lembongan (Flug über Bali + Boot)",
+        "form.homiemoon.option.komodo": "Ein paar Nächte auf einem Boot in Flores/Komodo (Flug)",
+        "form.validation.attending": "Bitte Teilnahme auswählen.",
+        "form.validation.whocomes": "Bitte auswählen wer kommt.",
+        "faq.id.question1": "Wie sieht eine Hochzeit in Indonesien aus?",
+        "faq.id.answer1": "Indonesische Hochzeiten sind oft sehr festlich und bunt – je nach Region und kulturellem Hintergrund können sie ganz unterschiedlich aussehen. In vielen Fällen handelt es sich um große Feiern mit hunderten oder sogar tausenden Gästen, traditioneller Kleidung, rituellen Zeremonien und opulenten Dekorationen. <b>Unsere Hochzeit wird allerdings etwas anders aussehen.</b> Wir feiern im kleineren Kreis – mit Familie und engen Freunden – und gestalten den Tag als eine Mischung aus traditionellen indonesischen Elementen und modernen, persönlichen Akzenten. Uns ist wichtig, dass die Feier authentisch und entspannt ist und zu uns als Paar passt. Deshalb gibt es bei uns keine riesige Gästeliste und kein übertriebenes Zeremoniell, sondern wie Patricia's Wurzeln: ein Mix aus beiden Kulturen.",
+        "faq.id.question2": "Wie lange fliegt man von Österreich nach Indonesien?",
+        "faq.id.answer2": "In der Regel dauert die Reise – mit Zwischenstopp – <b>zwischen 15 und 20 Stunden</b>. Für unsere Hochzeit sind die besten Verbindungen ab <b>Wien</b> nach <b>Jakarta</b> (Flughafencode <b>CGK</b>) mit Zwischenstopp entweder in Doha (Airline Quatar), Dubai (Airline Emirates), Istanbul (Turkish Airlines), Bangkok (Thai Airways).",
+        "faq.id.question3": "Welche Religionen hat Indonesien?",
+        "faq.id.answer3": "Indonesien ist ein multireligiöses Land, in dem offiziell sechs Religionen anerkannt sind. Die mit Abstand größte Glaubensgemeinschaft ist der <b>Islam</b> – etwa <b>87 %</b> der Bevölkerung sind Muslim:innen. Damit ist Indonesien das Land mit der größten muslimischen Bevölkerung weltweit. Daneben gibt es bedeutende Minderheiten von <b>Christen</b>, <b>Hindus</b> (vor allem auf der Insel Bali), sowie <b>Buddhisten</b> und <b>Konfuzianern</b>. ",
+        "faq.id.question4": "Gibt es im Hinblick auf Religion und Kultur etwas bei Kleidung und Verhalten zu beachten?",
+        "faq.id.answer4": "In Tempeln oder religiösen Orten sollten <b>Schultern und Knie bedeckt sein</b> – sowohl bei Männern als auch bei Frauen. Ansonsten ist eine leichte, locker sitzende Kleidung aus atmungsaktiven Stoffen ideal. In <b>Jakarta</b> gibt es fünf tägliche <b>Gebetstermine</b>. Der unüberhörbare Ruf (Adzan) aus Moscheen ertönt dabei meist über Lautsprecher. Manchmal kann es sein, dass Taxifahrer, Hotelangestellte oder Kellner*innen kurz pausieren, um zu beten. Bitte begegnet diesen Momenten mit <b>Offenheit und Respekt</b>. Auf <b>Bali</b> findet ihr <b>kleine bunte Körbchen</b> gefüllt mit Blumen, Reis, Geldstücken und Räucherstäbchen – sie sind tägliche Opfergaben und symbolisieren <b>Dankbarkeit, Harmonie und Schutz</b>. Bitte nicht betreten, drüber stolpern, anfassen oder mitnehmen.",
+        "faq.id.question5": "Kann man das Leitungswasser trinken?",
+        "faq.id.answer5": "Das Wasser ist zwar zum Duschen oder Zähneputzen in der Regel unbedenklich, aber <b>nicht zum Trinken geeignet</b>. Wir empfehlen euch deshalb, keine Eiswürfel oder frisch gewaschenes Obst/Gemüse zu verzehren.",
+        "faq.id.question6": "Wie teuer ist Indonesien?",
+        "faq.id.answer6": "Indonesien gilt allgemein als <b>sehr preiswertes Reiseziel</b>, besonders im Vergleich zu Europa. Ein einfaches Essen in einem lokalen Warung (kleines Restaurant) kostet oft nur € 1–3. Getränke aus dem Supermarkt liegen oft unter € 1-2. Natürlich variiert es je nach Region und Touristenzentren. Die lokale Währung ist Rupiah.",
+        "faq.id.question7": "Welche Impfungen braucht man für Indonesien?",
+        "faq.id.answer7": "Am Besten sprecht ihr hier mit eurem Hausarzt oder wendet euch an die Reiseimpfstellen in <a href=\"https://impfservice.wien/reiseimpfungen/\" target=\"_blank\" rel=\"noopener noreferrer\">Wien</a> oder <a href=\"https://www.linz.at/serviceguide/viewchapter.php?chapter_id=122811\" target=\"_blank\" rel=\"noopener noreferrer\">Linz</a>. Patricia hat die Typhus, Tollwut und Malaria-Impfung, hat aber auch einige Jahre in Indonesien gelebt 😉 Falls es euch hilft, findet ihr <a href=\"https://www.bereit-zu-reisen.de/reiseziele/indonesien-impfungen\" target=\"_blank\" rel=\"noopener noreferrer\">hier Impfempfehlungen</a>.",
+        "faq.id.question8": "Wie ist das Leben in Indonesien allgemein?",
+        "faq.id.answer8": "Indonesien ist lebendig, herzlich und manchmal ein bisschen chaotisch – aber gerade das macht den Charme aus ☺️<br><b>Alltag & Menschen:</b><br>Die Menschen sind meist <b>freundlich, hilfsbereit und neugierig</b>, auch wenn nicht jeder Englisch spricht. Mit einem Lächeln und etwas Geduld kommt man fast immer weiter ☺️<br><b>Verkehr & Pünktlichkeit:</b><br>In großen Städten wie Jakarta gibt es oft viel Verkehr und lange Staus. Termine sind daher eher flexibel zu verstehen – Pünktlichkeit wird, wie ihr es von Patricia wohl kennt, nicht ganz so streng genommen wie in Europa. In Indonesien sagt man dazu liebevoll <b>\"jam karet\"</b>, was so viel heißt wie <b>\"Gummi-Uhr\"</b> – die Zeit ist dehnbar und nicht immer ganz exakt. Am besten: etwas Geduld und Gelassenheit mitbringen (und vielleicht auch etwas von dieser Nachsicht wieder mit nach Europa für Patricia nehmen 😄)<br><b>Toiletten:</b><br>Nicht überall gibt es westliche Sitztoiletten – vor allem auf öffentlichen Toiletten oder unterwegs findet man oft nur <b>Hocktoiletten</b>. Klopapier ist selten vorhanden – stattdessen gibt es <b>Wasser zum Abspülen</b>. <b>Unser Tipp:</b> Immer ein paar Taschentücher dabeihaben (und ggf. Desinfektionsmittel)",
+        "faq.id.question9": "Was sollte man unbedingt mitbringen?",
+        "faq.id.answer9": "<ul><li>Sonnencreme mit hohem LSF (vor Ort oft teuer)</li><li>Mückenschutz</li><li>Bioflorin oder Perenterol (zur Stabilisierung der Darmflora)</li><li>Mittel gegen Durchfall (z. B. Imodium akut)</li><li>SIM-freies Handy, wenn ihr vor Ort eine günstige indonesische SIM-Karte nutzen wollt (Empfehlung von Patricia)</li></ul>",
+        "faq.id.question10": "Was kann man in Jakarta oder Indonesien machen?",
+        "faq.id.answer10": "<p>Indonesien ist riesig, vielseitig und wunderschön – von quirligen Städten über Vulkane bis hin zu Traumstränden ist alles dabei. Wer Zeit mitbringt, kann richtig viel erleben und sich dank der <b>sehr günstigen Inlandsflüge</b> auch bequem von Insel zu Insel bewegen.</p><p><b>Jakarta:</b><br>Jakarta ist eine riesige, kontrastreiche Metropole. Ideal für alle, die Lust auf Stadttrubel, Street Food und Einblicke in die moderne und traditionelle Seite Indonesiens haben.</p><p>Hier ein paar Highlights:</p><ul><li>Street Food-Tour durch die Nachtmärkte</li><li>Besuch im historischen Viertel <b>Kota Tua</b></li><li>Ausblick vom <b>Monas</b> (Nationaldenkmal)</li><li>Shopping & Food in den Mega-Malls (z. B. Grand Indonesia)</li><li>Ausflug zu den <b>Thousand Islands</b> (Inseln vor der Küste – Tagestrips möglich)</li></ul><p>So spannend Patricias Heimatstadt auch ist – für einen klassischen Urlaub gibt es in Indonesien deutlich entspanntere und schönere Orte. Wer also Erholung, Natur oder Strand sucht, sollte eher weiterziehen. Hier ein paar weitere Orte:</p><ul><li><b>Bali:</b> Strände, Surfen, Reisterrassen, Yoga, Kultur</li><li><b>Yogyakarta:</b> Tempel (Borobudur & Prambanan), Batik & Tradition</li><li><b>Gili Islands:</b> Traumstrände, Schnorcheln & Tauchen</li><li><b>Komodo-Inseln:</b> Warane, pinke Strände & tolle Bootstouren</li></ul>",
+        "faq.at.question1": "Welche Art von Trauung erwartet uns?",
+        "faq.at.answer1": "Die Zeremonie wird von einer Standesbeamtin am Wallhof durchgeführt.",
+        "faq.at.question2": "Warum findet die Hochzeit unter der Woche statt?",
+        "faq.at.answer2": "Der 4. August ist für uns ein ganz besonderes Datum: Unser Jahrestag ist am 4.4., wir haben uns am 4.6. in Bolsena verlobt – und nun möchten wir am 4.8. heiraten und mit euch feiern.",
+        "faq.at.question3": "Gibt es Übernachtungsmöglichkeiten in der Nähe?",
+        "faq.at.answer3": "Direkt an der Location leider nicht. In Schwertberg (ca. 5 Autominuten entfernt) empfehlen wir das Hotel Tinschert und den Mühlviertler Hof.",
+        "faq.at.question4": "Wo kann man parken?",
+        "faq.at.answer4": "Die Location verfügt über einen großzügigen Parkplatz mit ausreichend Platz für alle Gäste."
+      },
+      en: {
+        "nav.greeting": "Welcome to the wedding",
+        "invitation.hello.singular": "Celebrate with us",
+        "invitation.hello.plural": "Celebrate with us",
+        "invitation.greeting.singular": "We warmly invite you to our wedding!",
+        "invitation.greeting.plural": "We warmly invite you to our wedding!",
+        "saveDate.title": "Save the date",
+        "austria": "Austria",
+        "indonesia": "Indonesia",
+        "rsvp.title.singular": "Let us know",
+        "rsvp.title.plural": "Let us know",
+        "form.attending.singular": "Will you attend?",
+        "form.attending.plural": "Will you attend?",
+        "form.pleaseChoose": "Please choose",
+        "form.yes": "Yes!",
+        "form.onlyAustria": "only in Austria",
+        "form.onlyIndonesia": "only in Indonesia",
+        "form.yesToBoth": "Yes, to both!",
+        "form.sorryNo": "Unfortunately not",
+        "form.who": "Who is coming?",
+        "form.who.onlyMe": "Only me",
+        "form.who.only": "Only",
+        "form.who.both": "We'll both come",
+        "form.who.allThree": "We'll be three",
+        "form.who.allFour": "We'll be four",
+        "form.who.allFive": "We'll be five",
+        "form.who.plusOne": "+1 - I'll bring someone",
+        "form.allergies": "Allergies / intolerances",
+        "form.allergies.placeholder": "e.g., nuts, lactose, ...",
+        "form.submit": "Send your answer",
+        "form.success": "Thank you for your reply!",
+        "form.failure": "Submission failed. Please try again later.",
+        "faq.title": "Frequently Asked Questions",
+        "footer.copyright": "© 2025 Patricia & Paul – We can't wait to celebrate with you!",
+        "and": "and",
+        "date.austria": "August 4, 2026",
+        "date.indonesia": "August 4, 2027",
+        "wallhof": "Wallhof",
+        "wallhof.address": "Doppl 16, 4311 Schwertberg",
+        "wallhof.start": "Entry: 1:30 PM",
+        "wallhof.ceremony": "Ceremony: 2:00 PM",
+        "jakarta": "Jakarta",
+        "jakarta.address": "TBD, Indonesia",
+        "jakarta.start": "Entry: 3:00 PM",
+        "tinki": "Important Note",
+        "tinki.text": "Our little world and our beloved heart Tinki is unfortunately not getting any younger. If, shortly before the wedding, her health were to decline – which of course we all hope won’t happen – Patricia, out of love and responsibility, would not fly to Indonesia and we would postpone the wedding by a year. We therefore strongly recommend booking your trip with cancellation options or paying by credit card, as many credit cards include travel cancellation insurance. This decision would be incredibly difficult for us, and we truly hope for your understanding. Your consideration means the world to us.",
+        "dresscode": "Dresscode",
+        "agenda": "Agenda",
+        "agenda.comingsoon": "The wedding agenda will be available here two months in advance.",
+        "fotos": "Upload Photos",
+        "fotos.upload": "We wish for the ceremony to be captured only by our photographer. Enjoy the moment with us. For all the photos you take afterwards, we would be happy if you upload them here.",
+        "fotos.uploadlink": "Follow this link",
+        "presents": "Gift Wishes",
+        " presents.description": "Your time and presence are the greatest gifts for us. But if you’d still like to make us an extra happy couple, feel free to contribute to our wedding fund.",
+        "homiemoon": "Homie‑Moon",
+        "homiemoon.description": "After the wedding, we're planning a small trip with you (max. 4 days) – our Homie‑Moon. Whether we relax together, go snorkeling, spend a few days on a boat, or simply enjoy good food – it depends on what you feel like. Let us know if you'd be in – then we can plan something that fits. Important: This is of course completely optional – no pressure at all. If it doesn't work out for you, that's totally fine – we're still super happy to have you at the wedding!",
+        "form.homiemoon.question": "Would you join the Homie‑Moon?",
+        "form.homiemoon.option.gili": "Snorkeling and swimming at the Gili Islands (flight via Lombok + boat)",
+        "form.homiemoon.option.lembongan": "Island life on Nusa Lembongan (flight via Bali + boat)",
+        "form.homiemoon.option.komodo": "A few nights on a boat in Flores/Komodo (flight)",
+        "form.validation.attending": "Please select attendance.",
+        "form.validation.whocomes": "Please select who is coming.",
+        "faq.id.question1": "What does a wedding in Indonesia look like?",
+        "faq.id.answer1": "Indonesian weddings are often very festive and colorful – depending on the region and cultural background, they can look very different. In many cases, they are large celebrations with hundreds or even thousands of guests, traditional clothing, ritual ceremonies, and lavish decorations. <b>However, our wedding will look a bit different.</b> We are celebrating in a smaller circle – with family and close friends – and designing the day as a mix of traditional Indonesian elements and modern, personal touches. It is important to us that the celebration is authentic and relaxed and fits us as a couple. That’s why we don’t have a huge guest list or an exaggerated ceremony, but rather, like Patricia’s roots: a mix of both cultures.",
+        "faq.id.question2": "How long is the flight from Austria to Indonesia?",
+        "faq.id.answer2": "Usually, the journey – with a stopover – takes <b>between 15 and 20 hours</b>. For our wedding, the best connections are from <b>Vienna</b> to <b>Jakarta</b> (airport code <b>CGK</b>) with stopovers either in Doha (Qatar Airways), Dubai (Emirates), Istanbul (Turkish Airlines), or Bangkok (Thai Airways).",
+        "faq.id.question3": "What religions are there in Indonesia?",
+        "faq.id.answer3": "Indonesia is a multi-religious country where six religions are officially recognized. By far the largest faith community is <b>Islam</b> – about <b>87%</b> of the population are Muslims. This makes Indonesia the country with the largest Muslim population worldwide. In addition, there are significant minorities of <b>Christians</b>, <b>Hindus</b> (especially on the island of Bali), as well as <b>Buddhists</b> and <b>Confucians</b>.",
+        "faq.id.question4": "Are there any religious or cultural considerations regarding clothing and behavior?",
+        "faq.id.answer4": "In temples or religious places, <b>shoulders and knees should be covered</b> – for both men and women. Otherwise, light, loose-fitting clothing made from breathable fabrics is ideal. In <b>Jakarta</b>, there are five daily <b>prayer times</b>. The unmistakable call (Adzan) from mosques usually sounds over loudspeakers. Sometimes taxi drivers, hotel staff, or waiters might pause briefly to pray. Please meet these moments with <b>openness and respect</b>. On <b>Bali</b>, you will find <b>small colorful baskets</b> filled with flowers, rice, coins, and incense sticks – these are daily offerings symbolizing <b>gratitude, harmony, and protection</b>. Please do not step on, trip over, touch, or take them.",
+        "faq.id.question5": "Can you drink the tap water?",
+        "faq.id.answer5": "The water is generally safe for showering or brushing teeth, but <b>not suitable for drinking</b>. We recommend not to consume ice cubes or freshly washed fruits/vegetables.",
+        "faq.id.question6": "How expensive is Indonesia?",
+        "faq.id.answer6": "Indonesia is generally considered a <b>very affordable travel destination</b>, especially compared to Europe. A simple meal in a local warung (small restaurant) often costs only €1–3. Drinks from the supermarket are often under €1-2. Of course, prices vary depending on the region and tourist centers. The local currency is Rupiah.",
+        "faq.id.question7": "What vaccinations do you need for Indonesia?",
+        "faq.id.answer7": "It’s best to talk to your family doctor or contact travel vaccination centers in <a href=\"https://impfservice.wien/reiseimpfungen/\" target=\"_blank\" rel=\"noopener noreferrer\">Vienna</a> or <a href=\"https://www.linz.at/serviceguide/viewchapter.php?chapter_id=122811\" target=\"_blank\" rel=\"noopener noreferrer\">Linz</a>. Patricia has had typhoid, rabies, and malaria vaccinations but has also lived in Indonesia for several years 😉 If it helps, you can find <a href=\"https://www.bereit-zu-reisen.de/reiseziele/indonesien-impfungen\" target=\"_blank\" rel=\"noopener noreferrer\">vaccination recommendations here</a> (Apologies, only in German).",
+        "faq.id.question8": "What is life like in Indonesia in general?",
+        "faq.id.answer8": "Indonesia is lively, warm, and sometimes a bit chaotic – but that’s exactly what gives it its charm ☺️<br><b>Everyday Life & People:</b><br>People are usually <b>friendly, helpful, and curious</b>, even if not everyone speaks English. With a smile and some patience, you almost always get along ☺️<br><b>Traffic & Punctuality:</b><br>In big cities like Jakarta, there is often heavy traffic and long jams. Appointments are therefore to be understood more flexibly – punctuality is not taken as strictly as in Europe, as you might know from Patricia. In Indonesia, this is affectionately called <b>\"jam karet\"</b>, which means <b>\"rubber time\"</b> – time is stretchy and not always exact. Best: bring some patience and calmness (and maybe take some of this tolerance back to Europe for Patricia 😄)<br><b>Toilets:</b><br>Western-style toilets are not everywhere – especially in public toilets or on the road, you often find only <b>squat toilets</b>. Toilet paper is rarely available – instead, there is <b>water for washing</b>. <b>Our tip:</b> Always carry some tissues (and possibly hand sanitizer).",
+        "faq.id.question9": "What should you definitely bring?",
+        "faq.id.answer9": "<ul><li>Sunscreen with high SPF (often expensive locally)</li><li>Insect repellent</li><li>Bioflorin or Perenterol (to stabilize the gut flora)</li><li>Medicine for diarrhea (e.g., Imodium akut)</li><li>Unlocked phone if you want to use a cheap Indonesian SIM card locally (Patricia’s recommendation)</li></ul>",
+        "faq.id.question10": "What can you do in Jakarta or Indonesia?",
+        "faq.id.answer10": "<p>Indonesia is huge, diverse, and beautiful – from bustling cities to volcanoes and dream beaches, everything is there. If you have time, you can experience a lot and easily move from island to island thanks to <b>very cheap domestic flights</b>.</p><p><b>Jakarta:</b><br>Jakarta is a huge, contrasting metropolis. Ideal for those who want city bustle, street food, and insights into the modern and traditional sides of Indonesia.</p><p>Here are some highlights:</p><ul><li>Street food tour through night markets</li><li>Visit to the historic district <b>Kota Tua</b></li><li>View from the <b>Monas</b> (National Monument)</li><li>Shopping & food in mega malls (e.g., Grand Indonesia)</li><li>Trip to the <b>Thousand Islands</b> (islands off the coast – day trips possible)</li></ul><p>As exciting as Patricia’s hometown is – for a classic vacation, there are definitely more relaxed and beautiful places in Indonesia. So if you’re looking for relaxation, nature, or beach, you should move on. Here are a few more places:</p><ul><li><b>Bali:</b> Beaches, surfing, rice terraces, yoga, culture</li><li><b>Yogyakarta:</b> Temples (Borobudur & Prambanan), batik & tradition</li><li><b>Gili Islands:</b> Dream beaches, snorkeling & diving</li><li><b>Komodo Islands:</b> Monitor lizards, pink beaches & great boat tours</li></ul>",
+        "faq.at.question1": "What kind of ceremony can we expect?",
+        "faq.at.answer1": "The ceremony will be conducted by a registrar at the Wallhof.",
+        "faq.at.question2": "Why is the wedding taking place on a weekday?",
+        "faq.at.answer2": "August 4th is a very special date for us: our anniversary is on April 4th, we got engaged on June 4th in Bolsena – and now we want to marry and celebrate with you on August 4th.",
+        "faq.at.question3": "Are there any nearby accommodation options?",
+        "faq.at.answer3": "Unfortunately, there are no accommodations directly at the venue. In Schwertberg (about 5 minutes by car), we recommend Hotel Tinschert and Mühlviertler Hof.",
+        "faq.at.question4": "Where can we park?",
+        "faq.at.answer4": "The venue has a spacious parking area with enough room for all guests."
+      },
+      id: {
+        "nav.greeting": "Selamat datang di hari pernikahan",
+        "invitation.hello.singular": "Kita merayakan bersama",
+        "invitation.hello.plural": "Kita merayakan bersama",
+        "invitation.greeting.singular": "Dengan senang hati Kami mengundang untuk menghadiri Acara Pernikahan kami!!",
+        "invitation.greeting.plural": "Dengan senang hati Kami mengundang untuk menghadiri Acara Pernikahan kami!",
+        "saveDate.title": "Save the date",
+        "austria": "Austria",
+        "indonesia": "Indonesia",
+        "rsvp.title.singular": "Beri tahu kami",
+        "rsvp.title.plural": "Beri tahu kami",
+        "form.attending.singular": "Apakah Anda akan datang?",
+        "form.attending.plural": "Apakah Anda akan datang?",
+        "form.pleaseChoose": "Silakan pilih",
+        "form.yes": "Ya!",
+        "form.onlyAustria": "Hanya di Austria",
+        "form.onlyIndonesia": "Hanya di Indonesia",
+        "form.yesToBoth": "Ya, saya akan hadir di Austria dan Indonesia!",
+        "form.sorryNo": "Sayangnya tidak",
+        "form.who": "Siapa saja yang akan datang?",
+        "form.who.onlyMe": "Hanya saya",
+        "form.who.only": "Hanya",
+        "form.who.both": "Kami berdua akan datang",
+        "form.who.allThree": "Kami bertiga akan datang",
+        "form.who.allFour": "Kami berempat akan datang",
+        "form.who.allFive": "Kami berlima akan datang",
+        "form.who.plusOne": "+1 - Saya akan membawa pasangan",
+        "form.allergies": "Alergi / intoleransi",
+        "form.allergies.placeholder": "contoh: kacang, laktosa, dll.",
+        "form.submit": "Kirim jawaban",
+        "form.success": "Terima kasih atas tanggapanmu!",
+        "form.failure": "Pengiriman gagal. Silakan coba lagi nanti.",
+        "faq.title": "Pertanyaan yang Sering Diajukan",
+        "footer.copyright": "© 2025 Patricia & Paul – Dengan senang hati kami mengundang untuk merayakan Pernikahan kami!",
+        "and": "dan",
+        "date.austria": "4 Agustus 2026",
+        "date.indonesia": "4 Agustus 2027",
+        "wallhof": "Wallhof",
+        "wallhof.address": "Doppl 16, 4311 Schwertberg",
+        "wallhof.start": "Mulai: 13.30",
+        "wallhof.ceremony": "Upacara: 14.00",
+        "jakarta": "Jakarta",
+        "jakarta.address": "Akan ditentukan, Indonesia",
+        "jakarta.start": "Mulai: 15.00",
+        "tinki": "Catatan Penting",
+        "tinki.text": "Dunia kecil kami, dan pujaan hati kami yang tercinta, Tinki, sayangnya sudah tidak muda lagi. Jika kesehatannya memburuk menjelang hari pernikahan – yang tentu sangat kami harapkan tidak terjadi – Patricia, karena cinta dan rasa tanggung jawab, tidak akan terbang ke Indonesia dan kami akan menunda pernikahan selama satu tahun. Karena itu, kami sangat menyarankan kalian untuk memesan perjalanan dengan opsi pembatalan atau membayar dengan kartu kredit, karena banyak kartu kredit sudah termasuk asuransi pembatalan perjalanan. Keputusan ini tentu akan sangat berat bagi kami, dan kami sungguh berharap atas pengertian kalian. Perhatian kalian sungguh sangat berarti bagi kami.",
+        "dresscode": "Dresscode",
+        "agenda": "Agenda",
+        "agenda.comingsoon": "Agenda pernikahan akan tersedia di sini dua bulan sebelumnya.",
+        "fotos": "Unggah Foto",
+        "fotos.upload": "Kami berharap momen upacara hanya diabadikan oleh fotografer kami. Nikmatilah momen ini bersama kami. Untuk semua foto yang kalian ambil setelahnya, kami akan sangat senang jika kalian mengunggahnya di sini.",
+        "fotos.uploadlink": "Klik di sini untuk membuka album",
+        "presents": "Keinginan Hadiah",
+        " presents.description": "Waktu dan kehadiran kalian adalah hadiah terindah bagi kami. Namun jika kalian tetap ingin memberi sedikit kebahagiaan tambahan, kontribusi untuk dana pernikahan kami akan sangat dihargai.",
+        "homiemoon": "Homie‑Moon",
+        "homiemoon.description": "Setelah pernikahan, kami berencana liburan kecil bersama kalian (maks. 4 hari) – Homie‑Moon kami. Mau bersantai, snorkeling, menginap di kapal beberapa hari, atau sekadar makan enak – semuanya tergantung minat kalian. Beri tahu kami jika kalian tertarik – agar kami bisa merencanakan yang cocok. Penting: Ini tentu saja sepenuhnya sukarela – tidak ada kewajiban sama sekali. Kalau kalian tidak bisa ikut, tidak masalah – kami tetap sangat senang kalian hadir di pernikahan!",
+        "form.homiemoon.question": "Apakah kamu tertarik ikut Homie‑Moon?",
+        "form.homiemoon.option.gili": "Snorkeling dan berenang di Gili Islands (terbang via Lombok + kapal)",
+        "form.homiemoon.option.lembongan": "Island life di Nusa Lembongan (terbang via Bali + kapal)",
+        "form.homiemoon.option.komodo": "Beberapa malam di atas kapal di Flores/Komodo (terbang)",
+        "form.validation.attending": "Silakan pilih kehadiran.",
+        "form.validation.whocomes": "Silakan pilih siapa saja yang Ikut.",
+        "faq.id.question1": "Seperti apa pernikahan di Indonesia?",
+        "faq.id.answer1": "Pernikahan di Indonesia sering kali sangat meriah dan bermacam macam Adat istiadat – tergantung pada daerah dan latar belakang budaya, bisa sangat berbeda-beda. Dalam banyak Tradisi atau Adat, perayaan besar dengan ratusan atau bahkan ribuan tamu, pakaian tradisional, upacara Adat, dan dekorasi yang mewah. Namun, pernikahan kami akan sedikit berbeda. Kami merayakannya dalam Perayaan kecil – dengan keluarga dan teman dekat – dan merancang hari itu sebagai Gabungan antara tradisional Indonesia dan sentuhan modern serta pribadi. Penting bagi kami agar perayaan ini otentik dan santai serta sesuai dengan kami sebagai pasangan. Oleh karena itu, kami tidak memiliki daftar tamu yang besar atau upacara yang berlebihan, melainkan seperti Patricia: campuran dari dua kebudayaan.",
+        "faq.id.question2": "Berapa lama penerbangan dari Austria ke Indonesia?",
+        "faq.id.answer2": "Biasanya perjalanan – dengan transit – memakan waktu <b>antara 15 hingga 20 jam</b>. Untuk pernikahan kami, koneksi terbaik adalah dari <b>Wina</b> ke <b>Jakarta</b> (kode bandara <b>CGK</b>) dengan transit di Doha (Qatar Airways), Dubai (Emirates), Istanbul (Turkish Airlines), atau Bangkok (Thai Airways).",
+        "faq.id.question3": "Agama apa saja yang ada di Indonesia?",
+        "faq.id.answer3": "Indonesia adalah negara multireligius di mana enam agama secara resmi diakui. Komunitas agama terbesar adalah <b>Islam</b> – sekitar <b>87%</b> dari penduduknya adalah Muslim. Ini menjadikan Indonesia negara dengan populasi Muslim terbesar di dunia. Selain itu, ada minoritas signifikan dari <b>Kristen</b>, <b>Hindu</b> (terutama di pulau Bali), serta <b>Buddha</b> dan <b>Konfusianisme</b>.",
+        "faq.id.question4": "Apakah ada hal yang perlu diperhatikan terkait agama dan budaya mengenai pakaian dan perilaku?",
+        "faq.id.answer4": "Di kuil atau tempat-tempat suci, <b>bahu dan lutut harus tertutup</b> – baik pria maupun wanita. Selain itu, pakaian ringan dan longgar dari bahan yang mudah menyerap keringat sangat dianjurkan. Di <b>Jakarta</b> ada lima waktu <b>sholat</b> setiap hari. Panggilan sholat (Adzan) yang khas sering terdengar melalui pengeras suara. Kadang sopir taksi, staf hotel, atau pelayan mungkin berhenti sebentar untuk sholat. Mohon hadapi momen-momen ini dengan <b>terbuka dan hormat</b>. Di <b>Bali</b>, Anda akan sering melihat <b>keranjang kecil penuh bunga</b>, nasi, koin, dan dupa – ini adalah sesajen harian yang melambangkan <b>rasa syukur, harmoni, dan perlindungan</b>. Mohon jangan menginjak, menabrak, menyentuh, atau mengambilnya.",
+        "faq.id.question5": "Apakah air keran bisa diminum?",
+        "faq.id.answer5": "Air umumnya aman untuk mandi atau menyikat gigi, tetapi <b>tidak layak untuk diminum</b>. Kami menyarankan untuk tidak mengonsumsi es batu atau buah/sayur yang baru dicuci, terutama dari pedagang kaki lima.",
+        "faq.id.question6": "Apakah Indonesia mahal?",
+        "faq.id.answer6": "Secara umum, Indonesia dianggap sebagai <b>tujuan wisata yang sangat terjangkau</b>, terutama dibandingkan dengan Eropa. Makanan sederhana di warung lokal biasanya hanya €1–3. Minuman dari supermarket sering di bawah €1–2. Tentu saja, harga dapat bervariasi tergantung wilayah dan pusat wisata. Mata uang lokal adalah Rupiah.",
+        "faq.id.question7": "Vaksin apa yang diperlukan untuk ke Indonesia?",
+        "faq.id.answer7": "Sebaiknya konsultasikan dengan dokter keluarga Anda atau hubungi pusat vaksinasi perjalanan di <a href=\"https://impfservice.wien/reiseimpfungen/\" target=\"_blank\" rel=\"noopener noreferrer\">Wina</a> atau <a href=\"https://www.linz.at/serviceguide/viewchapter.php?chapter_id=122811\" target=\"_blank\" rel=\"noopener noreferrer\">Linz</a>. Patricia telah divaksinasi untuk tifus, rabies, dan malaria – dan dia juga pernah tinggal di Indonesia selama beberapa tahun 😉 Jika Anda butuh referensi, <a href=\"https://www.bereit-zu-reisen.de/reiseziele/indonesien-impfungen\" target=\"_blank\" rel=\"noopener noreferrer\">di sini ada rekomendasi vaksinasi</a> (Maaf, hanya dalam bahasa Jerman).",
+        "faq.id.question8": "Seperti apa kehidupan di Indonesia secara umum?",
+        "faq.id.answer8": "Indonesia itu hidup, hangat, dan terkadang sedikit kacau – tapi justru itu yang membuatnya menarik ☺️<br><b>Kehidupan sehari-hari & Masyarakat:</b><br>Orang-orang di Indonesia umumnya <b>ramah, suka membantu, dan penasaran</b>, meskipun tidak semua bisa berbahasa Inggris. Dengan senyuman dan sedikit kesabaran, hampir semua hal bisa diatasi ☺️<br><b>Lalu lintas & Ketepatan waktu:</b><br>Di kota-kota besar seperti Jakarta, lalu lintas sering padat dan macet. Maka dari itu, janji temu lebih fleksibel – ketepatan waktu tidak seketat di Eropa, seperti yang mungkin Anda tahu dari Patricia. Di Indonesia, ini disebut <b>\"jam karet\"</b> – artinya <b>waktu yang elastis</b> dan tidak selalu tepat. Yang terbaik: bawa kesabaran dan ketenangan (dan kalau bisa bawa pulang toleransi ini ke Eropa untuk Patricia 😄)<br><b>Toilet:</b><br>Toilet ala Barat tidak selalu tersedia – terutama di toilet umum atau di perjalanan, Anda mungkin hanya menemukan <b>toilet jongkok</b>. Tisu toilet jarang tersedia – sebagai gantinya, tersedia <b>air untuk membilas</b>. <b>Tips kami:</b> Selalu bawa tisu kering (dan mungkin hand sanitizer).",
+        "faq.id.question9": "Apa saja yang sebaiknya dibawa?",
+        "faq.id.answer9": "<ul><li>Sunscreen dengan SPF tinggi (sering mahal di sini)</li><li>Obat nyamuk atau Autau</li><li>Bioflorin atau Perenterol (untuk menjaga flora usus)</li><li>Obat diare (misalnya Imodium akut)</li><li>Ponsel tanpa SIM lock jika ingin menggunakan kartu SIM lokal (rekomendasi Patricia)</li></ul>",
+        "faq.id.question10": "Apa yang bisa dilakukan di Jakarta atau Indonesia?",
+        "faq.id.answer10": "<p>Indonesia sangat besar, beragam, dan indah – dari kota ramai hingga gunung berapi dan pantai impian, semuanya ada. Jika Anda punya waktu, Anda bisa menjelajahi banyak hal dan pindah pulau dengan mudah berkat <b>penerbangan domestik yang sangat murah</b>.</p><p><b>Jakarta:</b><br>Jakarta adalah kota besar yang penuh kontras. Ideal bagi Anda yang suka keramaian kota, jajanan kaki lima, dan ingin melihat sisi modern dan tradisional Indonesia.</p><p>Beberapa highlight:</p><ul><li>Tur kuliner di pasar malam</li><li>Kunjungan ke kawasan kota tua <b>Kota Tua</b></li><li>Pemandangan dari <b>Monas</b> (Monumen Nasional)</li><li>Belanja & kuliner di mal besar (misalnya Grand Plaza Indonesia)</li><li>Perjalanan ke <b>Kepulauan Seribu</b> (pulau-pulau di lepas pantai – bisa untuk trip sehari)</li></ul><p>Meski kota asal Patricia sangat menarik – untuk liburan klasik, Indonesia punya banyak tempat yang lebih santai dan indah. Jadi, jika Anda mencari alam atau pantai, sebaiknya lanjutkan perjalanan. Berikut beberapa tempat rekomendasi:</p><ul><li><b>Bali:</b> Pantai, surfing, sawah, yoga, budaya</li><li><b>Yogyakarta:</b> Candi (Borobudur & Prambanan), batik & tradisi</li><li><b>Kepulauan Gili:</b> Pantai impian, snorkeling & diving</li><li><b>Kepulauan Komodo:</b> Komodo, pantai pink & tur kapal yang indah</li></ul>",
+        "faq.at.question1": "Upacara pernikahan seperti apa yang akan diadakan?",
+        "faq.at.answer1": "Upacara akan dipimpin oleh petugas catatan sipil yang datang khusus ke Wallhof.",
+        "faq.at.question2": "Mengapa pernikahan diadakan pada hari kerja?",
+        "faq.at.answer2": "Tanggal 4 Agustus sangat istimewa bagi kami: hari jadi kami jatuh pada 4 April, kami bertunangan pada 4 Juni di Bolsena – dan sekarang kami ingin menikah serta merayakannya bersama kalian pada 4 Agustus.",
+        "faq.at.question3": "Apakah ada pilihan akomodasi di dekat lokasi?",
+        "faq.at.answer3": "Sayangnya, tidak ada akomodasi langsung di lokasi. Di Schwertberg (sekitar 5 menit dengan mobil), kami merekomendasikan Hotel Tinschert dan Mühlviertler Hof.",
+        "faq.at.question4": "Di mana tempat parkir tersedia?",
+        "faq.at.answer4": "Lokasi acara memiliki area parkir yang luas dengan cukup ruang untuk semua tamu."
+      }
+    };
+
+    const text = translations[lang];
+
+    const data = {
+      at: `<div class="card fade-slide">
+        <p class="text-center text-3xl" data-i18n="date.austria"></p>
+        </div>
+        <div class="iconcard mx-auto w-full sm:max-w-md fade-slide">
+          <div class="icon-area icon-area w-[150px] h-[150px] flex justify-center items-center overflow-hidden rounded-full mx-auto mb-4">
+            <img src="icon-wallhof.png" alt="Icon" class="w-full h-full object-cover rounded-full" />
+          </div>
+          <div class="text-area text-left w-[90%]">
+            <h3 class="text-xl font-semibold mb-2" data-i18n="wallhof"></h3>
+            <p class="text-gray-600" data-i18n="wallhof.address"></p>
+            <p class="text-gray-600" data-i18n="wallhof.start"></p>
+            <p class="text-gray-600" data-i18n="wallhof.ceremony"></p>
+
+          </div>
+        </div>
+        <div class="iconcard mx-auto w-full sm:max-w-md fade-slide">
+          <div class="icon-area icon-area w-[150px] h-[150px] flex justify-center items-center overflow-hidden rounded-full mx-auto mb-4">
+            <img src="icon-rings.png" alt="Icon" class="w-full h-full object-cover rounded-full" />
+          </div>
+          <div class="text-area text-left w-[90%]">
+            <h3 class="text-xl font-semibold mb-2" data-i18n="agenda"></h3>
+            <p class="text-gray-600" data-i18n="agenda.comingsoon"></p>
+          </div>
+        </div>`,
+
+      id: `<div class="card fade-slide">
+        <p class="text-center text-3xl" data-i18n="date.indonesia"></p>
+        </div>
+        <div class="iconcard mx-auto w-full sm:max-w-md fade-slide">
+          <div class="icon-area w-[150px] h-[150px] flex justify-center items-center overflow-hidden rounded-full mx-auto mb-4">
+            <img src="icon-beach.png" alt="Icon" class="w-full h-full object-cover rounded-full" />
+          </div>
+          <div class="text-area text-left w-[90%]">
+            <h3 class="text-xl font-semibold mb-2" data-i18n="jakarta"></h3>
+            <p class="text-gray-600" data-i18n="jakarta.address"></p>
+            <p class="text-gray-600" data-i18n="jakarta.start"></p>
+          </div>
+        </div>
+        <div class="iconcard mx-auto w-full sm:max-w-md fade-slide">
+          <div class="icon-area w-[150px] h-[150px] flex justify-center items-center overflow-hidden rounded-full mx-auto mb-4">
+            <img src="icon-tinki.png" alt="Icon" class="w-full h-full object-cover rounded-full" onclick="openModal(this.src)" />
+          </div>
+          <div class="text-area text-left w-[90%]">
+            <h3 class="text-xl font-semibold mb-2" data-i18n="tinki"></h3>
+            <p class="text-gray-600" data-i18n="tinki.text"></p>
+          </div>
+        </div>
+        <div class="iconcard mx-auto w-full sm:max-w-md fade-slide">
+          <div class="icon-area w-[150px] h-[150px] flex justify-center items-center overflow-hidden rounded-full mx-auto mb-4">
+            <img src="icon-rings.png" alt="Icon" class="w-full h-full object-cover rounded-full" />
+          </div>
+          <div class="text-area text-left w-[90%]">
+            <h3 class="text-xl font-semibold mb-2" data-i18n="agenda"></h3>
+            <p class="text-gray-600" data-i18n="agenda.comingsoon"></p>
+          </div>
+        </div>
+        <div id="homiemoon-card" class="iconcard mx-auto w-full sm:max-w-md fade-slide">
+          <div class="icon-area icon-area icon-area w-[150px] h-[150px] flex justify-center items-center overflow-hidden rounded-full mx-auto mb-4">
+            <img src="icon-homiemoon.png" alt="Icon" class="w-full h-full object-cover rounded-full" />
+          </div>
+          <div class="text-area text-left w-[90%]">
+            <h3 class="text-xl font-semibold mb-2" data-i18n="homiemoon"></h3>
+            <p class="text-gray-600" data-i18n="homiemoon.description"></p>
+          </div>
+        </div>`
+    };
+
+    const faq = {
+      at: `<div class="card faq-item">
+        <div class="faq-question">${text["faq.at.question1"]}</div>
+        <div class="faq-answer">${text["faq.at.answer1"]}</div>
+      </div>
+      <div class="card faq-item">
+        <div class="faq-question">${text["faq.at.question2"]}</div>
+        <div class="faq-answer">${text["faq.at.answer2"]}</div>
+      </div>
+      <div class="card faq-item">
+        <div class="faq-question">${text["faq.at.question3"]}</div>
+        <div class="faq-answer">${text["faq.at.answer3"]}</div>
+      </div>
+      <div class="card faq-item">
+        <div class="faq-question">${text["faq.at.question4"]}</div>
+        <div class="faq-answer">${text["faq.at.answer4"]}</div>
+      </div>`,
+
+      id: `
+      <div class="card faq-item">
+        <div class="faq-question">${text["faq.id.question1"]}</div>
+        <div class="faq-answer">${text["faq.id.answer1"]}</div>
+      </div>
+      <div class="card faq-item">
+        <div class="faq-question">${text["faq.id.question2"]}</div>
+        <div class="faq-answer">${text["faq.id.answer2"]}</div>
+      </div>
+      <div class="card faq-item">
+        <div class="faq-question">${text["faq.id.question3"]}</div>
+        <div class="faq-answer">${text["faq.id.answer3"]}</div>
+      </div>
+      <div class="card faq-item">
+        <div class="faq-question">${text["faq.id.question4"]}</div>
+        <div class="faq-answer">${text["faq.id.answer4"]}</div>
+      </div>
+      <div class="card faq-item">
+        <div class="faq-question">${text["faq.id.question5"]}</div>
+        <div class="faq-answer">${text["faq.id.answer5"]}</div>
+      </div>
+      <div class="card faq-item">
+        <div class="faq-question">${text["faq.id.question6"]}</div>
+        <div class="faq-answer">${text["faq.id.answer6"]}</div>
+      </div>
+      <div class="card faq-item">
+        <div class="faq-question">${text["faq.id.question7"]}</div>
+        <div class="faq-answer">${text["faq.id.answer7"]}</div>
+      </div>
+      <div class="card faq-item">
+        <div class="faq-question">${text["faq.id.question8"]}</div>
+        <div class="faq-answer">${text["faq.id.answer8"]}</div>
+      </div>
+      <div class="card faq-item">
+        <div class="faq-question">${text["faq.id.question9"]}</div>
+        <div class="faq-answer">${text["faq.id.answer9"]}</div>
+      </div>
+      <div class="card faq-item">
+        <div class="faq-question">${text["faq.id.question10"]}</div>
+        <div class="faq-answer">${text["faq.id.answer10"]}</div>
+      </div>`
+    };
+
+    const locationContainer = document.getElementById("save-date-content");
+    const attendingSelect = document.querySelector("select[name='attending']");
+    const plusOneLabel = document.getElementById("plusone-label");
+
+    function setupTabs() {
+      const tabButtons = document.querySelectorAll(".tab-button");
+      const tabContents = document.querySelectorAll(".tab-content");
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const selectedTab = btn.dataset.tab;
+
+          // 1. Alle Buttons aktualisieren
+          tabButtons.forEach(b => {
+            if (b.dataset.tab === selectedTab) {
+              b.classList.add("active");
+            } else {
+              b.classList.remove("active");
+            }
+          });
+
+          // 2. Alle Inhalte aktualisieren
+          tabContents.forEach(content => {
+            if (
+              content.id === `tab-${selectedTab}` ||
+              content.id === `faqtab-${selectedTab}`
+            ) {
+              content.classList.add("active");
+            } else {
+              content.classList.remove("active");
+            }
+          });
+
+          btn.scrollIntoView({ behavior: "auto", block: "start" });
+          setTimeout(() => { window.scrollBy({ top: -100, behavior: "auto" }); }, 300);
+        });
+      });
+    }
+
+    function hideHomiemoonIfNeeded() {
+      if (homiemoonParam !== '1') {
+        const homiemoonForm = document.getElementById("homiemoon");
+        const homiemoonCard = document.getElementById("homiemoon-card");
+        const homiemoonText = document.getElementById("homiemoon-text");
+
+        if (homiemoonForm) homiemoonForm.style.display = "none";
+        if (homiemoonCard) homiemoonCard.style.display = "none";
+        if (homiemoonText) homiemoonText.style.display = "none";
+      }
+    }
+
+    const homiemoon = document.getElementById("homiemoon");
+
+    if (guestCode === '1') {
+      locationContainer.innerHTML = data.at;
+      homiemoon.style.display = "none";
+      attendingSelect.value = 'AT';
+    } else if (guestCode === '2') {
+      locationContainer.innerHTML = data.id;
+      hideHomiemoonIfNeeded();
+      attendingSelect.value = 'ID';
+    } else {
+      locationContainer.innerHTML = `
+        <div class="tab-buttons fade-slide">
+          <button class="tab-button active" data-tab="at">${text["austria"]}</button>
+          <button class="tab-button" data-tab="id">${text["indonesia"]}</button>
+        </div>
+        <div id="tab-at" class="tab-content active">${data.at}</div>
+        <div id="tab-id" class="tab-content">${data.id}</div>
+      `;
+      setupTabs();
+      hideHomiemoonIfNeeded();
+      attendingSelect.value = 'BOTH';
+    }
+
+    const selectAttending = document.getElementById("attending-select");
+    // Optionen definieren
+    let optionsAttending = [{ value: "", text: text["form.pleaseChoose"] }];
+
+    if (guestCode === '1' || guestCode === '2') {
+      optionsAttending.push(
+        { value: guestCode === '1' ? "AT" : "ID", text: text["form.yes"] });
+    } else if (guestCode === '3') {
+      optionsAttending.push(
+        { value: "AT", text: text["form.onlyAustria"] },
+        { value: "ID", text: text["form.onlyIndonesia"] },
+        { value: "BOTH", text:  text["form.yesToBoth"] }
+      );
+    }
+
+    optionsAttending.push({ value: "NO", text: text["form.sorryNo"] });
+
+    // Optionen ins Select einfügen
+    optionsAttending.forEach(opt => {
+      const o = document.createElement("option");
+      o.value = opt.value;
+      o.textContent = opt.text;
+      selectAttending.appendChild(o);
+    });
+
+    selectAttending.addEventListener("change", function () {
+      const whoLabel = document.getElementById("who-label");
+      const whoSelect = document.getElementById("who-select");
+      const allergiesLabel = document.getElementById("allergies-label");
+      const allergiesInput = document.getElementById("allergies");
+      const homiemoon = document.getElementById("homiemoon");
+      const validationAttending = document.getElementById("attending-error");
+
+      validationAttending.textContent = "";
+
+      if (this.value === "NO") {
+        whoSelect.style.display = "none";
+        whoLabel.style.display = "none";
+        allergiesLabel.style.display = "none";
+        allergiesInput.style.display = "none";
+        homiemoon.style.display = "none";
+
+      } else if (this.value ==="AT") {
+        whoSelect.style.display = "";
+        whoLabel.style.display = "";
+        allergiesLabel.style.display = "";
+        allergiesInput.style.display = "";
+        homiemoon.style.display = "none";
+      }
+      else {
+        whoSelect.style.display = "";
+        whoLabel.style.display = "";
+        allergiesLabel.style.display = "";
+        allergiesInput.style.display = "";
+        if(guestCode != "1" && homiemoonParam == '1') {
+          homiemoon.style.display = "";
+        }
+      }
+    });
+
+    // Partner/Begleitperson-Code
+    const selectWho = document.getElementById("who-select");
+    // Optionen definieren
+    let optionsWho = [{ value: "", text: text["form.pleaseChoose"] }];
+
+    optionsWho.push({ value: "only_guest", text: `${text["form.who.onlyMe"]} (${firstName})` });
+    if (plusOneAllowed) {
+      optionsWho.push({ value: 'guest_plus_one', text: text["form.who.plusOne"] });
+    } else if (partnerParam) {
+      const partnerName = decodeURIComponent(partnerParam.replace(/-/g, ' '));
+      const partnerFirstName = partnerName.split(' ')[0];
+      optionsWho.push({ value: "only_partner", text: `${text["form.who.only"]} ${partnerFirstName}` });
+      optionsWho.push({ value: "guest_plus_partner", text: text["form.who.both"] });
+    }
+    
+    if (kids > 0) {
+      if(kids === 1) { 
+        optionsWho.push({ value: "both_plus_one_kid", text: "Wir kommen zu dritt" });
+      } else if(kids === 2) {
+        optionsWho.push({ value: "both_plus_two_kids", text: "Wir kommen zu viert" });
+      } else if(kids === 3) {
+        optionsWho.push({ value: "both_plus_two_kids", text: "Wir kommen zu fünft" });
+      }
+    }
+
+    // Optionen ins Select einfügen
+    optionsWho.forEach(opt => {
+      const o = document.createElement("option");
+      o.value = opt.value;
+      o.textContent = opt.text;
+      selectWho.appendChild(o);
+    });
+
+    selectWho.addEventListener("change", function () {
+      const validationWho = document.getElementById("who-error");
+      validationWho.textContent = "";
+    });
+
+    document.getElementById("allergies").placeholder = text["form.allergies.placeholder"];
+
+    if(!plusOneAllowed && partnerParam === '')
+    {
+      selectWho.value = "only_guest"
+      document.getElementById("who-label").style.display = 'none';
+    }
+
+    document.getElementById("rsvp-form").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const form = e.target;
+
+      // Felder
+      const attendingSelect = form.attending;
+      const whoSelect = form.who;
+
+      // Fehlercontainer (jeweils UNTER dem Feld platzieren im HTML)
+      const attendingError = document.getElementById("attending-error");
+      const whoError = document.getElementById("who-error");
+
+      // Fehlerstatus zurücksetzen
+      attendingError.textContent = "";
+      whoError.textContent = "";
+
+      let hasError = false;
+
+      // Validierung
+      if (!attendingSelect.value) {
+        attendingError.textContent = text["form.validation.attending"];
+        hasError = true;
+      }
+
+      // Nur prüfen, wenn who-Select sichtbar ist
+      if (whoSelect.offsetParent !== null && !whoSelect.value) {
+        whoError.textContent = text["form.validation.whocomes"];
+        hasError = true;
+      }
+
+      if (hasError) return; // Abbrechen bei Fehler
+
+      const homiemoonSelections = Array.from(
+          form.querySelectorAll('input[name="homiemoon[]"]:checked')
+        ).map(cb => cb.value);
+      const dataToSend = {
+        action: "submit",
+        name: form.name.value,
+        attending: form.attending.value,
+        who: form.who.value,
+        allergies: form.allergies.value,
+        guestMode: guestCode,
+        homiemoon: homiemoonSelections
+      };
+      try {
+        await fetch(googleScriptURL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dataToSend)
+        });
+        const successCard = document.createElement("div");
+        successCard.className = "card text-center mt-4";
+        successCard.innerHTML = `<h3>${text["form.success"]}</h3>`;
+        form.replaceWith(successCard);
+        form.reset();
+      } catch (error) {
+        alert(text["form.failure"]);
+      }
+    });
+
+    const faqContainer = document.getElementById("faq-content");
+
+    if (guestCode === '1') {
+      faqContainer.innerHTML = faq.at;
+    } else if (guestCode === '2') {
+      faqContainer.innerHTML = faq.id;
+    } else {
+      faqContainer.innerHTML = `
+        <div class="tab-buttons">
+          <button class="tab-button active" data-tab="at">${text["austria"]}</button>
+          <button class="tab-button" data-tab="id">${text["indonesia"]}</button>
+        </div>
+        <div id="faqtab-at" class="tab-content active">${faq.at}</div>
+        <div id="faqtab-id" class="tab-content">${faq.id}</div>
+      `;
+      setupTabs();
+    }
+
+  document.querySelectorAll(".faq-question").forEach(q => {
+      q.addEventListener("click", () => {
+        q.classList.toggle("open");
+      });
+    });
+
+  // Modal
+  function openModal(src) {
+    const modal = document.getElementById("modal");
+    const img = document.getElementById("modal-img");
+    img.src = src;
+    modal.style.display = "flex";
+  }
+
+  function translatePage(lang) {
+    const dict = translations[lang] || translations["de"];
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const key = el.getAttribute("data-i18n");
+      if (dict[key]) el.innerText = dict[key];
+    });
+
+    if(partnerParam) { 
+      partnerName = decodeURIComponent(partnerParam.replace(/-/g, ' '));
+      const partnerFirstName = partnerName.split(' ')[0];
+      document.getElementById("rsvp-text").innerText = `${text["rsvp.title.plural"]}, ${firstName} ` + dict["and"] + ` ${partnerFirstName}`;
+      document.getElementById("invitation").innerText = `${text["invitation.hello.plural"]}, ${firstName} ` + dict["and"] + ` ${partnerFirstName}!`;
+      document.getElementById("invitation.greeting").innerText = `${text["invitation.greeting.plural"]}`;
+      document.getElementById("form-attending").innerText = `${text["form.attending.plural"]}`;
+    } else {    
+      document.getElementById("rsvp-text").innerText += `, ${firstName}`;
+      document.getElementById("invitation").innerText += `, ${firstName}!`;
+    }
+
+  }
+
+  async function checkIfNameExists(name) {
+    const res = await fetch(`${googleScriptURL}?name=${encodeURIComponent(name)}`);
+    const data = await res.json();
+
+    if (data.status === "existing") {
+      console.log("returning true");
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  checkIfNameExists(guestName).then(exists => {
+    if (exists) {
+      document.getElementById("rsvp-form").style.display = "none";
+      document.getElementById("successMessage").style.display = "";
+    }
+  });
+  
+
+  document.addEventListener("DOMContentLoaded", () => {
+    translatePage(lang);
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('.fade-slide').forEach(el => {
+      observer.observe(el);
+    });
+  });
+  </script>
+</body>
+</html>
+ 
