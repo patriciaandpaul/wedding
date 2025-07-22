@@ -94,7 +94,6 @@
     }
   
     .card {
-      /*background-color: white;*/
       border-radius: 0.75rem;
       padding: 1.5rem;
       margin: 1rem auto;
@@ -102,7 +101,7 @@
       text-align: left;
       box-shadow: 0 4px 8px var(--primary);
       border: 1px solid var(--primary);
-      color: var(--accent); /* Dunkle Schrift in Cards */
+      color: var(--accent);
     }
   
     .card h3, .card h4 {
@@ -361,7 +360,10 @@
           <span data-i18n="form.homiemoon.option.komodo"></span>
         </label>
       </fieldset>
-      <button data-i18n="form.submit" type="submit"></button>
+      <button id="form-submit" data-i18n="form.submit" type="submit"></button>
+      <div id="form-loading" style="display: none;" class="text-center">
+        <img src="loading.gif" alt="loading..." class="inline-block w-60 h-40" />
+      </div>
     </form>
     <h3 id="successMessage" style="display: none;" class="card text-center mt-4" data-i18n="form.success"></h3>    
   </section>
@@ -1054,6 +1056,8 @@
     document.getElementById("rsvp-form").addEventListener("submit", async function(e) {
       e.preventDefault();
       const form = e.target;
+      const loader = document.getElementById("form-loading");
+      const submitButton = document.getElementById("form-submit");
 
       // Felder
       const attendingSelect = form.attending;
@@ -1083,6 +1087,10 @@
 
       if (hasError) return; // Abbrechen bei Fehler
 
+      loader.style.display = "block";
+      submitButton.style.display = "none";
+
+
       const homiemoonSelections = Array.from(
           form.querySelectorAll('input[name="homiemoon[]"]:checked')
         ).map(cb => cb.value);
@@ -1102,12 +1110,18 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(dataToSend)
         });
+
+        loader.style.display = "none";
+        submitButton.style.display = "";
+
         const successCard = document.createElement("div");
         successCard.className = "card text-center mt-4";
         successCard.innerHTML = `<h3>${text["form.success"]}</h3>`;
         form.replaceWith(successCard);
         form.reset();
       } catch (error) {
+        loader.style.display = "none";
+        submitButton.style.display = "";
         alert(text["form.failure"]);
       }
     });
