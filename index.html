@@ -439,24 +439,31 @@
       return params;
     }
 
+    const guestData = {
+      "a1dfac": { guestCode: "3", guestName: "Stefan Lanzerstorfer", partner: "Mona Stangl", plusOne: "0", kids: 0, homiemoon: "1" },
+      "a1fdca": { guestCode: "3", guestName: "Sebastian Lanzerstorfer", partner: "Elisabeth Lanzerstorfer", plusOne: "0", kids: 2, homiemoon: "1" },
+      "f1cdaf": { guestCode: "3", guestName: "Nova Kasandra", partner: "Ndut Kasandra-Lisy", plusOne: "0", kids: 0, homiemoon: "1" },
+      // TODO: weitere Gäste ...
+    };
+
     const googleScriptURL = "https://script.google.com/macros/s/AKfycbxL3HlpFpuCoJxczKlxwVrQFO2nZlY0JLoZumBGAvC6Uq5izYk66n0csQn7CzVW55y07g/exec";
     const params = getUrlParams();
-    const guestParam = params.guest || '';
-    const plusOneAllowed = params.plusone === '1';
-    const partnerParam = params.partner || '';
-    const homiemoonParam = params.homiemoon || '0';
+    const inviteKey = params.invite;
     const lang = params.lang || 'de';
-    const kids = parseInt(params.kids, 10) || 0;
 
-    let partnerName = '';
+    const guest = guestData[inviteKey];
+    const guestCode = guest.guestCode;
+    const guestName = guest.guestName;
+    const partner = guest.partner;
+    const plusOneAllowed = guest.plusOne === '1';
+    const homiemoon = guest.homiemoon;
+    const kids = guest.kids;
 
     const activeBtn = document.getElementById(`lang-${lang}`);
     if (activeBtn) {
       activeBtn.classList.add('border-blue-400', 'scale-110');
     }
 
-    let guestCode = guestParam.charAt(0);
-    let guestName = decodeURIComponent(guestParam.slice(2).replace(/-/g, ' '));
     const firstName = guestName.split(' ')[0];
     document.getElementById("input-name").value = guestName;
 
@@ -907,7 +914,7 @@
     }
 
     function hideHomiemoonIfNeeded() {
-      if (homiemoonParam !== '1') {
+      if (homiemoon !== '1') {
         const homiemoonForm = document.getElementById("homiemoon");
         const homiemoonCard = document.getElementById("homiemoon-card");
         const homiemoonText = document.getElementById("homiemoon-text");
@@ -918,11 +925,11 @@
       }
     }
 
-    const homiemoon = document.getElementById("homiemoon");
+    const homiemoonForm = document.getElementById("homiemoon");
 
     if (guestCode === '1') {
       locationContainer.innerHTML = data.at;
-      homiemoon.style.display = "none";
+      homiemoonForm.style.display = "none";
       attendingSelect.value = 'AT';
     } else if (guestCode === '2') {
       locationContainer.innerHTML = data.id;
@@ -972,7 +979,7 @@
       const whoSelect = document.getElementById("who-select");
       const allergiesLabel = document.getElementById("allergies-label");
       const allergiesInput = document.getElementById("allergies");
-      const homiemoon = document.getElementById("homiemoon");
+      const homiemoonForm = document.getElementById("homiemoon");
       const validationAttending = document.getElementById("attending-error");
 
       validationAttending.textContent = "";
@@ -982,26 +989,26 @@
         whoLabel.style.display = "none";
         allergiesLabel.style.display = "none";
         allergiesInput.style.display = "none";
-        homiemoon.style.display = "none";
+        homiemoonForm.style.display = "none";
 
       } else if (this.value ==="AT") {
-        if(plusOneAllowed || partnerParam != '' || kids > 0) {
+        if(plusOneAllowed || partner != '' || kids > 0) {
           whoSelect.style.display = "";
           whoLabel.style.display = "";
         }
         allergiesLabel.style.display = "";
         allergiesInput.style.display = "";
-        homiemoon.style.display = "none";
+        homiemoonForm.style.display = "none";
       }
       else {
-        if(plusOneAllowed || partnerParam != '' || kids > 0) {
+        if(plusOneAllowed || partner != '' || kids > 0) {
           whoSelect.style.display = "";
           whoLabel.style.display = "";
         }
         allergiesLabel.style.display = "";
         allergiesInput.style.display = "";
-        if(guestCode != "1" && homiemoonParam == '1') {
-          homiemoon.style.display = "";
+        if(guestCode != "1" && homiemoon == '1') {
+          homiemoonForm.style.display = "";
         }
       }
     });
@@ -1014,14 +1021,13 @@
     optionsWho.push({ value: "only_guest", text: `${text["form.who.onlyMe"]} (${firstName})` });
     if (plusOneAllowed) {
       optionsWho.push({ value: 'guest_plus_one', text: text["form.who.plusOne"] });
-    } else if (partnerParam) {
-      const partnerName = decodeURIComponent(partnerParam.replace(/-/g, ' '));
-      const partnerFirstName = partnerName.split(' ')[0];
+    } else if (partner) {
+      const partnerFirstName = partner.split(' ')[0];
       optionsWho.push({ value: "only_partner", text: `${text["form.who.only"]} ${partnerFirstName}` });
       optionsWho.push({ value: "guest_plus_partner", text: text["form.who.both"] });
     }
     
-    if (kids > 0 && partnerParam) {
+    if (kids > 0 && partner) {
       if(kids === 1) { 
         optionsWho.push({ value: "both_plus_one_kid", text: text["form.who.allThree"] });
       } else if(kids === 2) {
@@ -1054,7 +1060,7 @@
 
     document.getElementById("allergies").placeholder = text["form.allergies.placeholder"];
 
-    if(!plusOneAllowed && partnerParam === '' && kids === 0)
+    if(!plusOneAllowed && partner === '' && kids === 0)
     {
       selectWho.value = "only_guest"
       document.getElementById("who-label").style.display = 'none';
@@ -1172,9 +1178,8 @@
       if (dict[key]) el.innerText = dict[key];
     });
 
-    if(partnerParam) { 
-      partnerName = decodeURIComponent(partnerParam.replace(/-/g, ' '));
-      const partnerFirstName = partnerName.split(' ')[0];
+    if(partner) { 
+      const partnerFirstName = partner.split(' ')[0];
       document.getElementById("rsvp-text").innerText = `${text["rsvp.title.plural"]}, ${firstName} ` + dict["and"] + ` ${partnerFirstName}`;
       document.getElementById("invitation").innerText = `${text["invitation.hello.plural"]}, ${firstName} ` + dict["and"] + ` ${partnerFirstName}!`;
       document.getElementById("invitation.greeting").innerText = `${text["invitation.greeting.plural"]}`;
