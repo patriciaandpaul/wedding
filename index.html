@@ -445,18 +445,18 @@
       "b1dc07": { guestCode: "1", guestName: "Hannes Bodingbauer", partner: "", plusOne: "0", kids: 0, homiemoon: "0" },
       "b14g00": { guestCode: "1", guestName: "Heidi Bodingbauer", partner: "Heinz ", plusOne: "0", kids: 0, homiemoon: "0" },
       "b2cc02": { guestCode: "3", guestName: "Marco Bodingbauer", partner: "", plusOne: "0", kids: 0, homiemoon: "1" },
-      "b5cda1": { guestCode: "3", guestName: "Nova Kasandra", partner: "Ndut Kasandra-Lisy", plusOne: "0", kids: 0, homiemoon: "1" },
+      "b5cda1": { guestCode: "3", guestName: "Mama Kasandra", partner: "Ndut Kasandra-Lisy", plusOne: "0", kids: 0, homiemoon: "1" },
       "b43c03": { guestCode: "1", guestName: "Gerhard Lisy", partner: "", plusOne: "0", kids: 0, homiemoon: "0" },
       "b27a0a": { guestCode: "3", guestName: "Nisa Kasandra", partner: "Hundi Kasandra", plusOne: "0", kids: 0, homiemoon: "1" },
-      "b3c43d": { guestCode: "3", guestName: "Teteh Tante", partner: "John ", plusOne: "0", kids: 0, homiemoon: "1" },
-      "b537dc": { guestCode: "3", guestName: "Edit Garrison", partner: "Dave ", plusOne: "0", kids: 0, homiemoon: "1" },
+      "b3c43d": { guestCode: "3", guestName: "Tante-Teteh Kasandra", partner: "Uncle-John", plusOne: "0", kids: 0, homiemoon: "1" },
+      "b537dc": { guestCode: "3", guestName: "Tante-Edit Garrison", partner: "Uncle-Dave ", plusOne: "0", kids: 0, homiemoon: "1" },
       "b5c328": { guestCode: "3", guestName: "Peyton Garrison", partner: "Liam ", plusOne: "0", kids: 0, homiemoon: "1" },
       "b78cad": { guestCode: "3", guestName: "Caitlyn Garrison", partner: "Zane ", plusOne: "0", kids: 0, homiemoon: "1" },
       "baghiraluna": { guestCode: "3", guestName: "Michaela Pfleger", partner: "", plusOne: "1", kids: 0, homiemoon: "1" },
       "lillikiki":  { guestCode: "3", guestName: "Nini Zika", partner: "Flo Renner", plusOne: "0", kids: 0, homiemoon: "1" },
 
       // Strizzi
-      "a048cd": { guestCode: "3", guestName: "Christine Lanzerstorfer", partner: "Karl Lanzerstorfer", plusOne: "0", kids: 0, homiemoon: "1" },
+      "a048cd": { guestCode: "3", guestName: "Mama Lanzerstorfer", partner: "Papa Lanzerstorfer", plusOne: "0", kids: 0, homiemoon: "1" },
       "a1dfac": { guestCode: "3", guestName: "Mona Stangl", partner: "Stefan Lanzerstorfer", plusOne: "0", kids: 0, homiemoon: "1" },
       "a16dca": { guestCode: "3", guestName: "Elisabeth Lanzerstorfer", partner: "Sebastian Lanzerstorfer", plusOne: "0", kids: 2, homiemoon: "1" },
       "a3fg8a": { guestCode: "1", guestName: "Christa Hinterreither", partner: "Wilhelm Wolkerstorfer", plusOne: "0", kids: 0, homiemoon: "0" },
@@ -486,7 +486,8 @@
       activeBtn.classList.add('border-blue-400', 'scale-110');
     }
 
-    const firstName = guestName.split(' ')[0];
+    const firstName = guestName.split(' ')[0].replace("-", " ");
+
     document.getElementById("input-name").value = guestName;
 
     const translations = {
@@ -540,7 +541,7 @@
         "agenda.comingsoon": "Die Agenda der Hochzeit wird zwei Monate vorher hier zu finden sein.",
         "fotos": "Fotos hochladen",
         "fotos.upload": "Wir wünschen uns, dass die Trauung nur von unserem Fotografen festgehalten wird und ihr das Hier und Jetzt mit uns genießt. Für alle Fotos, die ihr danach macht, würden wir uns freuen, wenn ihr sie hier hochladet.",
-        "fotos.uploadlink": "Hier geht es zum Album",
+        "fotos.uploadlink": "Hier bitte die Fotos hochladen",
         "presents": "Geschenkswunsch",
         " presents.description": "Eure Zeit und euer Kommen sind die größten Geschenke für uns. Wer uns aber eine zusätzliche Freude machen möchte, darf sehr gern zur Hochzeitskasse beitragen.",
         "homiemoon": "Homie-Moon",
@@ -632,7 +633,7 @@
         "agenda.comingsoon": "The wedding agenda will be available here two months in advance.",
         "fotos": "Upload Photos",
         "fotos.upload": "We wish for the ceremony to be captured only by our photographer. Enjoy the moment with us. For all the photos you take afterwards, we would be happy if you upload them here.",
-        "fotos.uploadlink": "Follow this link",
+        "fotos.uploadlink": "Please upload the photos here",
         "presents": "Gift Wishes",
         " presents.description": "Your time and presence are the greatest gifts for us. But if you’d still like to make us an extra happy couple, feel free to contribute to our wedding fund.",
         "homiemoon": "Homie‑Moon",
@@ -724,7 +725,7 @@
         "agenda.comingsoon": "Agenda pernikahan akan tersedia di sini dua bulan sebelumnya.",
         "fotos": "Unggah Foto",
         "fotos.upload": "Kami berharap momen upacara hanya diabadikan oleh fotografer kami. Nikmatilah momen ini bersama kami. Untuk semua foto yang kalian ambil setelahnya, kami akan sangat senang jika kalian mengunggahnya di sini.",
-        "fotos.uploadlink": "Klik di sini untuk membuka album",
+        "fotos.uploadlink": "Silakan unggah foto-fotonya di sini",
         "presents": "Keinginan Hadiah",
         " presents.description": "Waktu dan kehadiran kalian adalah hadiah terindah bagi kami. Namun jika kalian tetap ingin memberi sedikit kebahagiaan tambahan, kontribusi untuk dana pernikahan kami akan sangat dihargai.",
         "homiemoon": "Homie‑Moon",
@@ -1051,7 +1052,7 @@
     if (plusOneAllowed) {
       optionsWho.push({ value: 'guest_plus_one', text: text["form.who.plusOne"] });
     } else if (partner) {
-      const partnerFirstName = partner.split(' ')[0];
+      const partnerFirstName = partner.split(' ')[0].replace("-", " ");
       optionsWho.push({ value: "only_partner", text: `${text["form.who.only"]} ${partnerFirstName}` });
       optionsWho.push({ value: "guest_plus_partner", text: text["form.who.both"] });
     }
@@ -1208,7 +1209,7 @@
     });
 
     if(partner) { 
-      const partnerFirstName = partner.split(' ')[0];
+      const partnerFirstName = partner.split(' ')[0].replace("-", " ");
       document.getElementById("rsvp-text").innerText = `${text["rsvp.title.plural"]}, ${firstName} ` + dict["and"] + ` ${partnerFirstName}`;
       document.getElementById("invitation").innerText = `${text["invitation.hello.plural"]}, ${firstName} ` + dict["and"] + ` ${partnerFirstName}!`;
       document.getElementById("invitation.greeting").innerText = `${text["invitation.greeting.plural"]}`;
