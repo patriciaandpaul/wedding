@@ -443,54 +443,60 @@
 
     const guestData = {
       // Babe
-      "b1dc07": { guestCode: "3", guestName: "Hannes Bodingbauer", partner: "", plusOne: "0", kids: 0, homiemoon: "0" },
-      "b14g00": { guestCode: "3", guestName: "Heidi Bodingbauer", partner: "Heinz ", plusOne: "0", kids: 0, homiemoon: "0" },
-      "b2cc02": { guestCode: "3", guestName: "Marco Bodingbauer", partner: "", plusOne: "0", kids: 0, homiemoon: "1" },
-      "b5cda1": { guestCode: "3", guestName: "Mami Kasandra", partner: "Ndut Kasandra-Lisy", plusOne: "0", kids: 0, homiemoon: "1" },
-      "b43c03": { guestCode: "1", guestName: "Gerhard Lisy", partner: "", plusOne: "0", kids: 0, homiemoon: "0" },
-      "b27a0a": { guestCode: "3", guestName: "Nisa Kasandra", partner: "Hundi Kasandra", plusOne: "0", kids: 0, homiemoon: "1" },
-      "b3c43d": { guestCode: "3", guestName: "Tante-Teteh Kasandra", partner: "Uncle-John", plusOne: "0", kids: 0, homiemoon: "1" },
-      "b537dc": { guestCode: "3", guestName: "Tante-Edith Garrison", partner: "Uncle-Dave ", plusOne: "0", kids: 0, homiemoon: "1" },
-      "b5c328": { guestCode: "3", guestName: "Peyton Garrison", partner: "Liam ", plusOne: "0", kids: 0, homiemoon: "1" },
-      "b78cad": { guestCode: "3", guestName: "Caitlyn Garrison", partner: "Zane ", plusOne: "0", kids: 0, homiemoon: "1" },
-      "baghiraluna": { guestCode: "3", guestName: "Michaela Pfleger", partner: "", plusOne: "1", kids: 0, homiemoon: "1" },
-      "lillikiki":  { guestCode: "3", guestName: "Nini Zika", partner: "Flo Renner", plusOne: "0", kids: 0, homiemoon: "1" },
+      "b1dc07": { guestCode: "3", guestName: "Hannes Bodingbauer", partner: "", plusOne: "0", kids: 0, kidNames: "", homiemoon: "0" },
+      "b14g00": { guestCode: "3", guestName: "Heidi Bodingbauer", partner: "Heinz ", plusOne: "0", kids: 0, kidNames: "", homiemoon: "0" },
+      "b2cc02": { guestCode: "3", guestName: "Marco Bodingbauer", partner: "", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "b5cda1": { guestCode: "3", guestName: "Mami Kasandra", partner: "Ndut Kasandra-Lisy", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "b43c03": { guestCode: "1", guestName: "Gerhard Lisy", partner: "", plusOne: "0", kids: 0, kidNames: "", homiemoon: "0" },
+      "b27a0a": { guestCode: "3", guestName: "Nisa Kasandra", partner: "Hundi Kasandra", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "b3c43d": { guestCode: "3", guestName: "Tante-Teteh Kasandra", partner: "Uncle-John", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "b537dc": { guestCode: "3", guestName: "Tante-Edith Garrison", partner: "Uncle-Dave ", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "b5c328": { guestCode: "3", guestName: "Peyton Garrison", partner: "Liam ", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "b78cad": { guestCode: "3", guestName: "Caitlyn Garrison", partner: "Zane ", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "baghiraluna": { guestCode: "3", guestName: "Michaela Pfleger", partner: "", plusOne: "1", kids: 0, kidNames: "", homiemoon: "1" },
+      "lillikiki":  { guestCode: "3", guestName: "Nini Zika", partner: "Flo Renner", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
 
-      "d3ac78": { guestCode: "2", guestName: "Tante-Wit Kasandra", partner: "Uncle-Bambang", plusOne: "0", kids: 1, homiemoon: "1" },
-      "d3ca38": { guestCode: "2", guestName: "Pula Kasandra", partner: "", plusOne: "0", kids: 0, homiemoon: "1" },
+      "d3ac78": { guestCode: "2", guestName: "Tante-Uit Kasandra", partner: "Uncle-Bambang", plusOne: "0", kids: 1, kidNames: "& Nada", homiemoon: "0" },
+      "d3ca38": { guestCode: "2", guestName: "Pula Kasandra", partner: "", plusOne: "0", kids: 0, kidNames: "", homiemoon: "0" },
+      "d481b7": { guestCode: "2", guestName: "Ray Kasandra", partner: "", plusOne: "1", kids: 0, kidNames: "", homiemoon: "0" },
+      "d8b4c7": { guestCode: "2", guestName: "Resa Kasandra", partner: "", plusOne: "1", kids: 0, kidNames: "", homiemoon: "0" },
+      "d7b4c7": { guestCode: "2", guestName: "Atu Kasandra", partner: "Salim ", plusOne: "0", kids: 1, kidNames: "& Barsya", homiemoon: "0" },
+      "dbc122": { guestCode: "2", guestName: "Yus Kasandra", partner: "Ipong ", plusOne: "0", kids: 2, kidNames: ", Erji & Riu", homiemoon: "0" },
+      "d24c42": { guestCode: "2", guestName: "Ica Kasandra", partner: "Agus ", plusOne: "0", kids: 1, kidNames: "", homiemoon: "0" },
+      "dd7bb6": { guestCode: "2", guestName: "Tante-Anna Kasandra", partner: "", plusOne: "1", kids: 0, kidNames: "", homiemoon: "0" },
 
-      "dc1d78": { guestCode: "2", guestName: "Jenny Zika", partner: "Paul ", plusOne: "0", kids: 0, homiemoon: "1" },
-      "dd137a": { guestCode: "2", guestName: "Amina Jusic", partner: "Halid ", plusOne: "0", kids: 0, homiemoon: "1" },
-      "db3588": { guestCode: "2", guestName: "Szakacs Roland", partner: "", plusOne: "1", kids: 0, homiemoon: "1" },
-      "db1e23": { guestCode: "2", guestName: "Patrick Scholz", partner: "Karin ", plusOne: "0", kids: 0, homiemoon: "1" },
-      "dce148": { guestCode: "2", guestName: "Ibti Baumann", partner: "Andi ", plusOne: "0", kids: 2, homiemoon: "1" },
-      "d22481": { guestCode: "2", guestName: "Birgit Cemerka", partner: "Alex ", plusOne: "0", kids: 2, homiemoon: "1" },
-      "de2421": { guestCode: "2", guestName: "Stephan Staudigl", partner: "Richarda ", plusOne: "0", kids: 0, homiemoon: "1" },
-      "dcb4af": { guestCode: "2", guestName: "Conny Joachimsen", partner: "Jost ", plusOne: "0", kids: 3, homiemoon: "1" },
-      "dbba44": { guestCode: "2", guestName: "Rafaela Heeberger", partner: "Harald ", plusOne: "0", kids: 2, homiemoon: "1" },
-      "dcba34": { guestCode: "2", guestName: "Christina Außerwöger", partner: "Christoph ", plusOne: "0", kids: 0, homiemoon: "1" },
-      "db55e1": { guestCode: "2", guestName: "Angi Führlinger", partner: "", plusOne: "0", kids: 0, homiemoon: "1" },
-      "db456c": { guestCode: "2", guestName: "Nati Böcksteiner", partner: "", plusOne: "0", kids: 0, homiemoon: "1" },
-      "dd4472": { guestCode: "2", guestName: "Sanam Amiri", partner: "Flo ", plusOne: "0", kids: 0, homiemoon: "1" },
-      "de1bcd": { guestCode: "2", guestName: "Rini Friesacher", partner: "Robert ", plusOne: "0", kids: 1, homiemoon: "1" },
-      "de24e2": { guestCode: "2", guestName: "Romana Haider-Derler", partner: "Vali ", plusOne: "0", kids: 1, homiemoon: "1" },
+      "dc1d78": { guestCode: "2", guestName: "Jenny Zika", partner: "", plusOne: "1", kids: 0, kidNames: "", homiemoon: "1" },
+      "dd137a": { guestCode: "2", guestName: "Amina Jusic", partner: "Halid ", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "db3588": { guestCode: "2", guestName: "Szakacs Roland", partner: "", plusOne: "1", kids: 0, kidNames: "", homiemoon: "1" },
+      "db1e23": { guestCode: "2", guestName: "Patrick Scholz", partner: "Karin ", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "dce148": { guestCode: "2", guestName: "Ibti Baumann", partner: "Andi ", plusOne: "0", kids: 2, kidNames: ", Lina & Sam", homiemoon: "1" },
+      "d22481": { guestCode: "2", guestName: "Birgit Cemerka", partner: "Alex ", plusOne: "0", kids: 2, kidNames: ", Julia & Fabi", homiemoon: "1" },
+      "de2421": { guestCode: "2", guestName: "Stephan Staudigl", partner: "Richarda ", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "dcb4af": { guestCode: "2", guestName: "Conny Joachimsen", partner: "Jost ", plusOne: "0", kids: 3, kidNames: ", Erik, Lars & Liv", homiemoon: "1" },
+      "dbba44": { guestCode: "2", guestName: "Rafaela Heeberger", partner: "Harald ", plusOne: "0", kids: 2, kidNames: ", Emilia & Lori", homiemoon: "1" },
+      "dcba34": { guestCode: "2", guestName: "Christina Außerwöger", partner: "Christoph ", plusOne: "0", kids: 0, kidNames: "",  homiemoon: "1" },
+      "db55e1": { guestCode: "2", guestName: "Angi Führlinger", partner: "", plusOne: "0", kids: 0, kidNames: "",  homiemoon: "1" },
+      "db456c": { guestCode: "2", guestName: "Nati Böcksteiner", partner: "", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "dd4472": { guestCode: "2", guestName: "Sanam Amiri", partner: "Flo ", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "de1bcd": { guestCode: "2", guestName: "Rini Friesacher", partner: "Robert ", plusOne: "0", kids: 1, kidNames: "& RJ", homiemoon: "1" },
+      "de24e2": { guestCode: "2", guestName: "Romana Haider-Derler", partner: "Vali ", plusOne: "0", kids: 1, kidNames: "& Rosalie", homiemoon: "1" },
 
 
       // Strizzi
-      "a048cd": { guestCode: "3", guestName: "Mama Lanzerstorfer", partner: "Papa Lanzerstorfer", plusOne: "0", kids: 0, homiemoon: "1" },
-      "a1dfac": { guestCode: "3", guestName: "Mona Stangl", partner: "Stefan Lanzerstorfer", plusOne: "0", kids: 0, homiemoon: "1" },
-      "a16dca": { guestCode: "3", guestName: "Elisabeth Lanzerstorfer", partner: "Sebastian Lanzerstorfer", plusOne: "0", kids: 2, homiemoon: "1" },
-      "a3fg8a": { guestCode: "1", guestName: "Christa Hinterreither", partner: "Wilhelm Wolkerstorfer", plusOne: "0", kids: 0, homiemoon: "0" },
-      "a3g38a": { guestCode: "1", guestName: "Johanna Wolkerstorfer", partner: "Josef Wolkerstorfer", plusOne: "0", kids: 0, homiemoon: "0" },
-      "a3cfa8": { guestCode: "3", guestName: "Simone Maresch", partner: "Karl Maresch", plusOne: "0", kids: 1, homiemoon: "1" },
-      "ac2fa8": { guestCode: "1", guestName: "Martina Zölzer", partner: "Alfred Lanzerstorfer", plusOne: "0", kids: 2, homiemoon: "0" },
-      "a38fa8": { guestCode: "1", guestName: "Ursula Neubauer", partner: "Gerhard Neubauer", plusOne: "0", kids: 0, homiemoon: "0" },
-      "aggfa8": { guestCode: "3", guestName: "Nici Neubauer", partner: "Thomas Neubauer", plusOne: "0", kids: 1, homiemoon: "1" },
+      "a048cd": { guestCode: "3", guestName: "Mama Lanzerstorfer", partner: "Papa Lanzerstorfer", plusOne: "0", kids: 0, kidNames: "",  homiemoon: "1" },
+      "a1dfac": { guestCode: "3", guestName: "Mona Stangl", partner: "Stefan Lanzerstorfer", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "a16dca": { guestCode: "3", guestName: "Elisabeth Lanzerstorfer", partner: "Sebastian Lanzerstorfer", plusOne: "0", kids: 2, kidNames: ", Anna & Valentin", homiemoon: "1" },
+      "a3fg8a": { guestCode: "1", guestName: "Christa Hinterreither", partner: "Wilhelm Wolkerstorfer", plusOne: "0", kids: 0, kidNames: "",  homiemoon: "0" },
+      "a3g38a": { guestCode: "1", guestName: "Johanna Wolkerstorfer", partner: "Josef Wolkerstorfer", plusOne: "0", kids: 0, kidNames: "", homiemoon: "0" },
+      "a3cfa8": { guestCode: "3", guestName: "Simone Maresch", partner: "Karl Maresch", plusOne: "0", kids: 1, kidNames: "", homiemoon: "1" },
+      "ac2fa8": { guestCode: "1", guestName: "Martina Zölzer", partner: "Alfred Lanzerstorfer", plusOne: "0", kids: 2, kidNames: "", homiemoon: "0" },
+      "a38fa8": { guestCode: "1", guestName: "Ursula Neubauer", partner: "Gerhard Neubauer", plusOne: "0", kids: 0, kidNames: "", homiemoon: "0" },
+      "aggfa8": { guestCode: "3", guestName: "Nici Neubauer", partner: "Thomas Neubauer", plusOne: "0", kids: 1, kidNames: "", homiemoon: "1" },
       
-      "cggfa8": { guestCode: "2", guestName: "Christina Rothberger", partner: "Roland Rothberger", plusOne: "0", kids: 0, homiemoon: "1" },
-      "bros4eva": { guestCode: "2", guestName: "Matylda Zielinski", partner: "Maciek Zielinski", plusOne: "0", kids: 0, homiemoon: "1" },
-      "cddaa8": { guestCode: "2", guestName: "Sophie List", partner: "Dominik List", plusOne: "0", kids: 0, homiemoon: "1" },
-      "ccdd78": { guestCode: "2", guestName: "Daniela Wolf", partner: "Johannes Petermüller", plusOne: "0", kids: 0, homiemoon: "1" },
+      "cggfa8": { guestCode: "2", guestName: "Christina Rothberger", partner: "Roland Rothberger", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "bros4eva": { guestCode: "2", guestName: "Matylda Zielinski", partner: "Maciek Zielinski", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "cddaa8": { guestCode: "2", guestName: "Sophie List", partner: "Dominik List", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
+      "ccdd78": { guestCode: "2", guestName: "Daniela Wolf", partner: "Johannes Petermüller", plusOne: "0", kids: 0, kidNames: "", homiemoon: "1" },
     };
 
     const googleScriptURL = "https://script.google.com/macros/s/AKfycbxL3HlpFpuCoJxczKlxwVrQFO2nZlY0JLoZumBGAvC6Uq5izYk66n0csQn7CzVW55y07g/exec";
@@ -502,6 +508,7 @@
     const guestCode = guest.guestCode;
     const guestName = guest.guestName;
     const partner = guest.partner;
+    const kidNames = guest.kidNames;
     const plusOneAllowed = guest.plusOne === '1';
     const homiemoon = guest.homiemoon;
     const kids = guest.kids;
@@ -1226,8 +1233,15 @@
 
     if(partner) { 
       const partnerFirstName = partner.split(' ')[0].replace("-", " ");
-      document.getElementById("rsvp-text").innerText = `${text["rsvp.title.plural"]}, ${firstName} ` + dict["and"] + ` ${partnerFirstName}`;
-      document.getElementById("invitation").innerText = `${text["invitation.hello.plural"]}, ${firstName} ` + dict["and"] + ` ${partnerFirstName}!`;
+      if(kidNames)
+      {
+        const kidNamesString = kidNames.replace("&", " " + dict["and"]);
+        document.getElementById("rsvp-text").innerText = `${text["rsvp.title.plural"]}, ${firstName}, ${partnerFirstName}${kidNamesString}`;
+        document.getElementById("invitation").innerText = `${text["invitation.hello.plural"]}, ${firstName}, ${partnerFirstName}${kidNamesString}!`; 
+      } else {
+        document.getElementById("rsvp-text").innerText = `${text["rsvp.title.plural"]}, ${firstName} ` + dict["and"] + ` ${partnerFirstName}`;
+        document.getElementById("invitation").innerText = `${text["invitation.hello.plural"]}, ${firstName} ` + dict["and"] + ` ${partnerFirstName}!`;
+      }
       document.getElementById("invitation.greeting").innerText = `${text["invitation.greeting.plural"]}`;
       document.getElementById("form-attending").innerText = `${text["form.attending.plural"]}`;
     } else {    
@@ -1245,7 +1259,7 @@
       console.log("returning true");
       return true;
     } else {
-      return false;
+     return false;
     }
   }
   
