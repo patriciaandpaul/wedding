@@ -315,7 +315,7 @@
     </div>
   </nav>
   <section class="py-10 px-4">
-    <img src="us-engaged.jpg" alt="Patricia & Paul sind verlobt" class="mx-auto rounded-2xl shadow-lg max-w-md w-full sm:max-w-md fade-slide" onclick="openModal(this.src)" />
+    <img id="picture-main" src="us-engaged.jpg" alt="Patricia & Paul sind verlobt" class="mx-auto rounded-2xl shadow-lg max-w-md w-full sm:max-w-md fade-slide" onclick="openModal(this.src)" />
   </section>
   <section class="text-center py-10 px-4 fade-slide">
     <h2 data-i18n="invitation.hello.singular" id="invitation" class="text-4xl md:text-5xl mb-4"></h2>
@@ -323,7 +323,7 @@
   </section>
   <section id="save-date" class="text-center py-10 px-4">
     <img src="background-flowers2.png" alt="Blumenhintergrund" class="mx-auto rounded-2xl max-w-md w-full sm:max-w-md fade-slide" />
-    <h1 id="save-date-title" class="save-date fade-slide text-center" data-i18n="saveDate.title"></h1>
+    <h1 id="save-date-title" class="save-date fade-slide text-center" style="display: none;" data-i18n="saveDate.title"></h1>
     <div id="save-date-content" class="fade-slide"></div>
   </section>
 
@@ -416,7 +416,7 @@
   </section>
 
   <section class="py-10 px-4">
-    <img src="us-main.png" alt="Patricia & Paul" class="mx-auto rounded-2xl shadow-lg max-w-md w-full sm:max-w-md fade-slide" onclick="openModal(this.src)" />
+    <img id="picture-end" src="us-main.png" alt="Patricia & Paul" class="mx-auto rounded-2xl shadow-lg max-w-md w-full sm:max-w-md fade-slide" onclick="openModal(this.src)" />
   </section>
 
   </section>
@@ -620,7 +620,7 @@
         "faq.at.question2": "Warum findet die Hochzeit unter der Woche statt?",
         "faq.at.answer2": "Der 4. August ist für uns ein ganz besonderes Datum: Unser Jahrestag ist am 4.4., wir haben uns am 4.6. in Bolsena verlobt – und nun möchten wir am 4.8. heiraten und mit euch feiern.",
         "faq.at.question3": "Gibt es Übernachtungsmöglichkeiten in der Nähe?",
-        "faq.at.answer3": "Direkt an der Location leider nicht. In Schwertberg (ca. 5 Autominuten entfernt) empfehlen wir das Hotel Tinschert und den Mühlviertler Hof.",
+        "faq.at.answer3": "Direkt an der Location leider nicht. Wir würden das Hotel Best Parkhotel Hagenberg empfehlen, dieses ist mit dem Auto ca. 15min entfernt.",
         "faq.at.question4": "Wo kann man parken?",
         "faq.at.answer4": "Die Location verfügt über einen großzügigen Parkplatz mit ausreichend Platz für alle Gäste."
       },
@@ -714,7 +714,7 @@
         "faq.at.question2": "Why is the wedding taking place on a weekday?",
         "faq.at.answer2": "August 4th is a very special date for us: our anniversary is on April 4th, we got engaged on June 4th in Bolsena – and now we want to marry and celebrate with you on August 4th.",
         "faq.at.question3": "Are there any nearby accommodation options?",
-        "faq.at.answer3": "Unfortunately, there are no accommodations directly at the venue. In Schwertberg (about 5 minutes by car), we recommend Hotel Tinschert and Mühlviertler Hof.",
+        "faq.at.answer3": "Unfortunately, not directly at the location. We would recommend the Hotel Best Parkhotel Hagenberg, which is about a 15-minute drive away.",
         "faq.at.question4": "Where can we park?",
         "faq.at.answer4": "The venue has a spacious parking area with enough room for all guests."
       },
@@ -808,7 +808,7 @@
         "faq.at.question2": "Mengapa pernikahan diadakan pada hari kerja?",
         "faq.at.answer2": "Tanggal 4 Agustus sangat istimewa bagi kami: hari jadi kami jatuh pada 4 April, kami bertunangan pada 4 Juni di Bolsena – dan sekarang kami ingin menikah serta merayakannya bersama kalian pada 4 Agustus.",
         "faq.at.question3": "Apakah ada pilihan akomodasi di dekat lokasi?",
-        "faq.at.answer3": "Sayangnya, tidak ada akomodasi langsung di lokasi. Di Schwertberg (sekitar 5 menit dengan mobil), kami merekomendasikan Hotel Tinschert dan Mühlviertler Hof.",
+        "faq.at.answer3": "Sayangnya, tidak tersedia langsung di lokasi. Kami menyarankan Hotel Best Parkhotel Hagenberg, yang berjarak sekitar 15 menit dengan mobil.",
         "faq.at.question4": "Di mana tempat parkir tersedia?",
         "faq.at.answer4": "Lokasi acara memiliki area parkir yang luas dengan cukup ruang untuk semua tamu."
       }
@@ -971,8 +971,18 @@
               content.id === `faqtab-${selectedTab}`
             ) {
               content.classList.add("active");
+              document.getElementById("picture-main").src = "us-main.png";
+              document.getElementById("picture-end").src = "us-engaged.jpg";
+              document.getElementById("picture-end").style.display = "none";
+              document.getElementById("save-date-title").style.display = "block";
+
             } else {
               content.classList.remove("active");
+              document.getElementById("picture-main").src = "us-engaged.jpg";
+              document.getElementById("picture-end").src = "us-main.png";
+              document.getElementById("picture-end").style.display = "block";
+              document.getElementById("save-date-title").style.display = "none";
+
             }
           });
 
@@ -996,14 +1006,19 @@
 
     const homiemoonForm = document.getElementById("homiemoon");
     const saveDateTitle = document.getElementById("save-date-title");
+    const firstPicture = document.getElementById("picture-main");
+    const endPicture = document.getElementById("picture-end");
+
 
     if (guestCode === '1') {
       locationContainer.innerHTML = data.at;
       homiemoonForm.style.display = "none";
-      saveDateTitle.style.display = "none";
       attendingSelect.value = 'AT';
     } else if (guestCode === '2') {
       locationContainer.innerHTML = data.id;
+      firstPicture.src = "us-main.png";
+      endPicture.style.display = "none";
+      saveDateTitle.style.display = "block";
       hideHomiemoonIfNeeded();
       attendingSelect.value = 'ID';
     } else {
