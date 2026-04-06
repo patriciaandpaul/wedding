@@ -313,9 +313,9 @@
         <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f1ee-1f1e9.svg" alt="🇮🇩" class="w-6 h-6">
       </button>
     </div>
-  </nav>  
+  </nav>
   <section class="py-10 px-4">
-    <img src="us-main.png" alt="Patricia & Paul" class="mx-auto rounded-2xl shadow-lg max-w-md w-full sm:max-w-md fade-slide" onclick="openModal(this.src)" />
+    <img src="us-engaged.jpg" alt="Patricia & Paul sind verlobt" class="mx-auto rounded-2xl shadow-lg max-w-md w-full sm:max-w-md fade-slide" onclick="openModal(this.src)" />
   </section>
   <section class="text-center py-10 px-4 fade-slide">
     <h2 data-i18n="invitation.hello.singular" id="invitation" class="text-4xl md:text-5xl mb-4"></h2>
@@ -323,13 +323,8 @@
   </section>
   <section id="save-date" class="text-center py-10 px-4">
     <img src="background-flowers2.png" alt="Blumenhintergrund" class="mx-auto rounded-2xl max-w-md w-full sm:max-w-md fade-slide" />
-    <h1 class="save-date fade-slide text-center" data-i18n="saveDate.title"></h1>
+    <h1 id="save-date-title" class="save-date fade-slide text-center" data-i18n="saveDate.title"></h1>
     <div id="save-date-content" class="fade-slide"></div>
-  </section>
-
-  <section id="faq" class="text-center py-10 px-4 fade-slide">
-    <h2 class="text-3xl mb-6" data-i18n="faq.title"></h2>
-    <div id="faq-content"></div>
   </section>
 
   <section class="py-10 px-4 fade-slide">
@@ -413,6 +408,15 @@
         <p class="text-gray-600" data-i18n=" presents.description"></p>
       </div>
     </div>
+  </section>
+
+  <section id="faq" class="text-center py-10 px-4 fade-slide">
+    <h2 class="text-3xl mb-6" data-i18n="faq.title"></h2>
+    <div id="faq-content"></div>
+  </section>
+
+  <section class="py-10 px-4">
+    <img src="us-main.png" alt="Patricia & Paul" class="mx-auto rounded-2xl shadow-lg max-w-md w-full sm:max-w-md fade-slide" onclick="openModal(this.src)" />
   </section>
 
   </section>
@@ -829,14 +833,13 @@
           </div>
         </div>
         <div class="iconcard mx-auto w-full sm:max-w-md fade-slide">
-          <div class="icon-area icon-area w-[150px] h-[150px] flex justify-center items-center overflow-hidden rounded-full mx-auto mb-4">
-            <img src="icon-rings.png" alt="Icon" class="w-full h-full object-cover rounded-full" />
-          </div>
-          <div class="text-area text-left w-[90%]">
+          <div class="text-area text-center w-[90%]">
             <h3 class="text-xl font-semibold mb-2" data-i18n="agenda"></h3>
-            <p class="text-gray-600" data-i18n="agenda.comingsoon"></p>
           </div>
-        </div>`,
+          <div class="iconcard mx-auto w-full sm:max-w-md fade-slide">
+            <img src="agenda-${lang}.png"/>
+          </div>
+      </div>`,
 
       id: `<div class="card fade-slide">
         <p class="text-center text-3xl" data-i18n="date.indonesia"></p>
@@ -992,10 +995,12 @@
     }
 
     const homiemoonForm = document.getElementById("homiemoon");
+    const saveDateTitle = document.getElementById("save-date-title");
 
     if (guestCode === '1') {
       locationContainer.innerHTML = data.at;
       homiemoonForm.style.display = "none";
+      saveDateTitle.style.display = "none";
       attendingSelect.value = 'AT';
     } else if (guestCode === '2') {
       locationContainer.innerHTML = data.id;
